@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+            baseStyle.css is for personal formatting while dropzone.js and dropzone.css is an open source easy to manage drag and drop 
+            functionality package
+        -->
+        <link rel="stylesheet" type="text/css" href="assets/styles/baseStyle.css">
+        <link rel="stylesheet" type="text/css" href="assets/dist/dropzone.css">
+        <script src="assets/js/dropzone.js"></script>
+    </head>
+    <body>
+        <div class="gridWrapper">
+            <div class="column"></div>
+            <div class="column">
+                <!--
+                    the dropzone class gives us the dropzone.js drag and drop form with an id for custom options to be enabled
+                    WARNING: the action must not be changed
+                -->
+                <form action="/file-upload" class="dropzone" id="my-awesome-dropzone" style="border: 2px dashed black;">
+                    <input type="text" name="title" value="Enter a Title" id="picTitle">
+                </form>
+
+                <!--
+                    This script allows me to change some of base options for the drag and drop form
+                    such as one file at a time and remove and replace the old file with a new one, a diffent initial display message
+                    and the size of the picture (have to override the dropzone.css too)
+                -->
+                <script>
+                    Dropzone.options.myAwesomeDropzone = {
+                        paramName: "file",
+                        maxFiles: 1,
+                        maxfilesexceeded: function(file) 
+                        {
+                            this.removeAllFiles();
+                            this.addFile(file);
+                        },
+                        dictDefaultMessage: "Drag and Drop Image",
+                        thumbnailWidth: 500,
+                        thumbnailHeight: 500
+                    };
+                </script>
+                <!--
+                    override for dropzone.css styles so that the thumbnail size is increased and that the error mark and success mark
+                    is not displayed blocking the picture.
+                -->
+                <style>
+                    .dropzone .dz-preview .dz-image 
+                    {
+                        width: 500px;
+                        height: 500px;
+                    }
+                    .dropzone .dz-preview .dz-success-mark svg, .dropzone .dz-preview .dz-error-mark svg 
+                    {
+                        display: none;
+                    }
+                </style>
+            </div>
+            <div class="column"></div>
+        </div>
+    </body>
+</html>

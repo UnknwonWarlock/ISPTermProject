@@ -1,0 +1,23 @@
+body
+{
+    text-align: center;
+    background-color: black;
+}
+
+.gridWrapper
+{
+    display: flex;
+}
+
+.column
+{
+    flex: 50%;
+    background-color: limegreen;
+}
+
+.dropzone-previews
+{
+    background-color: white;
+    height: 600px;
+    width: 100%;
+}
