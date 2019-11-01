@@ -5,20 +5,29 @@
             baseStyle.css is for personal formatting while dropzone.js and dropzone.css is an open source easy to manage drag and drop 
             functionality package
         -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles/baseStyle.css">
         <link rel="stylesheet" type="text/css" href="assets/dist/dropzone.css">
         <script src="assets/js/dropzone.js"></script>
     </head>
     <body>
         <div class="gridWrapper">
-            <div class="column"></div>
             <div class="column">
+                <form id="scrapbookForm" method="GET">
+                    <input type="text" name="scrapbook" id="scrapbook" value="Scrapbook Name">
+                </form>
+            </div>
+            <div class="column" id="insertCol" style="border: 2px dashed black;">
                 <!--
                     the dropzone class gives us the dropzone.js drag and drop form with an id for custom options to be enabled
                     WARNING: the action must not be changed
                 -->
-                <form action="/file-upload" class="dropzone" id="my-awesome-dropzone" style="border: 2px dashed black;">
-                    <input type="text" name="title" value="Enter a Title" id="picTitle">
+                <form action="/file-upload" class="dropzone" id="my-awesome-dropzone" method="GET">
+                    <input type="text" name="title" value="Enter a Title!" id="picTitle">
+                </form>
+                <form id="captionForm" method="GET" style="border: none">
+                    <textarea cols="280" type="text" name="caption" id="picCaption">Enter a Caption!</textarea><br><br>
+                    <input type="submit" name="submit" value="Add" class="submit" id="yep">
                 </form>
 
                 <!--
@@ -27,6 +36,20 @@
                     and the size of the picture (have to override the dropzone.css too)
                 -->
                 <script>
+                    document.getElementById("yep").style.cursor = "pointer";
+
+                    $(".submit").click(function() { // changed
+                        $.ajax({
+                            type: "GET",
+                            url: "approve_test.php",
+                            data: $(this).parent().serialize(), // changed
+                            success: function(data) {
+                                alert(data); // show response from the php script.
+                            }
+                        });
+                        return false; // avoid to execute the actual form submission.
+                    });
+
                     Dropzone.options.myAwesomeDropzone = {
                         paramName: "file",
                         maxFiles: 1,
