@@ -1,0 +1,54 @@
+header{
+    font: 30px Georgia, serif;
+    padding-top: 15px;
+    padding-left: 15px;
+	text-shadow: 0 0 3px black;
+    background: navajowhite;
+    background-image: linear-gradient(to right, rosybrown, navajowhite);
+    border-top: inset rgb(155, 116, 116) 5px;
+    color: white;
+    height: 50px;
+}
+
+body{
+    margin:0;
+    padding:0;
+    background-color: lightyellow;
+}
+
+.home:hover, .home:link, .home:visited, .home:active{
+    text-decoration: none;
+    padding: 5px;
+    border: 3px dashed white;
+    border-radius: 8px;
+    color: white;
+}
+
+ul{
+	list-style-type:none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+    background:navajowhite;
+}
+
+li{
+	float: left;
+}
+
+li a{
+	display: block;
+	text-align: center;
+	padding: 10px 12px;
+	text-decoration: none;
+	color: black;
+}
+
+li a:hover:not(.active){
+	background: rgb(255, 229, 190);
+    text-decoration: none;
+}
+
+.active{
+	background: rgb(204, 177, 137);
+}
