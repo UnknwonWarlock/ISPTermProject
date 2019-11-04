@@ -34,15 +34,28 @@
                     exit;
                 }
                 
-                $query = "SELECT * FROM Users WHERE " .
-                         "Username='" . $_POST['user'] . "' " .
-                         "AND Pass='" . $_POST['pass'] . "'";
-                $result = mysqli_query($db, $query);
-                mysqli_close($db);
-                if( mysqli_num_rows($result) > 0 )
+                switch( $_POST["submit"] )
                 {
-                    $_SESSION['username'] = $_POST['user'];
-                    header("Location: main.php");
+                    case "Log in":
+                        $query = "SELECT * FROM Users WHERE " .
+                        "Username='" . $_POST['user'] . "' " .
+                        "AND Pass='" . $_POST['pass'] . "'";
+                        $result = mysqli_query($db, $query);
+                        mysqli_close($db);
+                        if( mysqli_num_rows($result) > 0 )
+                        {
+                            $_SESSION['username'] = $_POST['user'];
+                            header("Location: home.php");
+                        }
+                        break;
+                    case "Register":
+                        $query = "insert into Users values ( '" . 
+                        $_POST['user'] . "', '" .
+                        $_POST['pass'] . "' )";
+                        mysqli_query($db, $query);
+                        $_SESSION['username'] = $_POST['user'];
+                        mysqli_close($db);
+                        header("Location: home.php");
                 }
             }
         ?>
@@ -53,10 +66,10 @@
             <?php
                 if( isset( $_POST["submit"] ) )
                 {
-                    print "invalid username or password <br>";
+                    print '<span style = "color:red">invalid username or password</span><br>';
                 }
             ?>
-            <input type="submit" name="submit" value="Submit">
+            <input type="submit" name="submit" value="Log in"><input type = "submit" name = "submit" value = "Register">
         </form>
     </body>
 </html>
