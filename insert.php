@@ -7,15 +7,22 @@
         -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles/baseStyle.css">
+        <link rel="stylesheet" type="text/css" href="assets/styles/homeStyle.css">
         <link rel="stylesheet" type="text/css" href="assets/dist/dropzone.css">
         <script src="assets/js/dropzone.js"></script>
     </head>
     <body>
+        <header style="text-align: left"><a class="home" href="home.php">DigiScrap</a>: A Place for Scrap Bookers!</header>
+        <ul>
+            <li><a class="active" href="#">Login</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
         <div class="gridWrapper">
             <div class="column">
                 <form id="scrapbookForm" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="user" id="scrapbook" value="Username">
-                    <input type="text" name="scrapbook" id="scrapbook" value="Scrapbook Name">
+                    <!-- make input for user readonly after testing -->
+                    <input type="text" name="user" id="scrapbook" placeholder="Username">
+                    <input type="text" name="scrapbook" id="scrapbook" placeholder="Scrapbook Name" required>
                 </form>
             </div>
             <div class="column" id="insertCol" style="border: 2px dashed black;">
@@ -24,7 +31,7 @@
                     WARNING: the action must not be changed
                 -->
                 <form action="processAdd.php" class="dropzone" id="my-awesome-dropzone" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="title" value="Enter a Title!" id="picTitle">
+                    <input type="text" name="title" placeholder="Enter a Title!" id="picTitle" required>
                 </form>
                 <form id="captionForm" method="POST" style="border: none" enctype="multipart/form-data">
                     <textarea cols="280" type="text" name="caption" id="picCaption">Enter a Caption!</textarea><br><br>
@@ -65,17 +72,38 @@
                                 // Append all form inputs to the formData Dropzone will POST
                                 var data = $('#myAwesomeDropzone').serializeArray();
                                 $.each(data, function(key, el) {
-                                    formData.append(el.name, el.value);
+                                    if(el.value)
+                                    {
+                                        formData.append(el.name, el.value);
+                                    }
+                                    else
+                                    {
+                                        alert("Please Insert a Picture!");
+                                    }
                                 });
 
                                 var data2 = $('#captionForm').serializeArray();
                                 $.each(data2, function(key, el) {
-                                    formData.append(el.name, el.value);
+                                    if(el.value !== "Enter a Caption!")
+                                    {
+                                        formData.append(el.name, el.value);
+                                    }
+                                    else
+                                    {
+                                        alert("Please enter a real caption!");
+                                    }
                                 });
                     
                                 var data3 = $('#scrapbookForm').serializeArray();
                                 $.each(data3, function(key, el) {
-                                    formData.append(el.name, el.value);
+                                    if(el.value)
+                                    {
+                                        formData.append(el.name, el.value);
+                                    }
+                                    else
+                                    {
+                                        alert("Please have a correct username or scrapbook name");
+                                    }
                                 });
                             });
                         }

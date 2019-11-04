@@ -1,10 +1,3 @@
-body
-{
-    text-align: center;
-    background-image: linear-gradient(to bottom,#b92b27 60%, #1565c0);
-    min-height: 100vh;
-}
-
 ul
 {
     text-align: left;
@@ -19,6 +12,7 @@ ul
 .column
 {
     flex: 50%;
+    font: Georgia, serif;
 }
 
 .dropzone-previews
@@ -30,7 +24,7 @@ ul
 
 #insertCol
 {
-    background-color: #1565c0;
+    background-color: rosybrown;
     border-radius: 25px; 
     padding: 20px; 
 }
@@ -38,7 +32,7 @@ ul
 #my-awesome-dropzone
 {
     border: none;
-    background-color: #1565c0;
+    background-color: rosybrown;
     font-size: 20px;
 }
 
@@ -75,7 +69,7 @@ ul
 
 .submit
 {
-    background-color: #1565c0;
+    background-color: rosybrown;
     border: transparent;
     border-top: 2px dashed black; 
     width: 100%;

@@ -10,17 +10,21 @@ header{
     height: 50px;
 }
 
+
 body{
     margin:0;
     padding:0;
     background-color: lightyellow;
 }
 
-.home:hover, .home:link, .home:visited, .home:active{
+.home:hover, .home:link, .home:active{
     text-decoration: none;
     padding: 5px;
     border: 3px dashed white;
     border-radius: 8px;
+    color: white;
+}
+.home:visited{
     color: white;
 }
 
