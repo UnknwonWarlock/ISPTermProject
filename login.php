@@ -11,7 +11,7 @@
             <li><a href="about.html">About</a></li>
         </ul>        
         <?php
-            $error = "";
+            session_start();
             if( isset( $_POST["submit"] ))
             {
                 
@@ -41,9 +41,9 @@
                 mysqli_close($db);
                 if( mysqli_num_rows($result) > 0 )
                 {
+                    $_SESSION['username'] = $_POST['user'];
                     header("Location: main.php");
                 }
-                $error = "Username or Password incorrect <br>";
             }
         ?>
         <form class="login" action="login.php" method="POST"> 
