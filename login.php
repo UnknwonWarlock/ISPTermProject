@@ -49,6 +49,15 @@
                         }
                         break;
                     case "Register":
+                        $query = "SELECT * FROM Users WHERE " .
+                        "Username='" . $_POST['user'] . "'";
+                        $result = mysqli_query($db, $query);
+                        if( mysqli_num_rows($result) > 0 )
+                        {
+                            mysqli_close($db);
+                            break;
+                        }
+
                         $query = "insert into Users values ( '" . 
                         $_POST['user'] . "', '" .
                         $_POST['pass'] . "' )";
@@ -66,7 +75,16 @@
             <?php
                 if( isset( $_POST["submit"] ) )
                 {
-                    print '<span style = "color:red">invalid username or password</span><br>';
+                    print '<span style = "color:red">';
+                    switch( $_POST["submit"] )
+                    {
+                        case "Log in":
+                            print 'Invalid username or password';
+                            break;
+                        case "Register":
+                            print 'That username already exists';
+                    }
+                    print '</span><br>';
                 }
             ?>
             <input type="submit" name="submit" value="Log in"><input type = "submit" name = "submit" value = "Register">
