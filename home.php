@@ -23,10 +23,6 @@
         <div id="CScrap" class="tabcontent">
             <h3>Create Scrapbook</h3>
             <form method="POST" action="">
-                Username: <br>
-                <?php
-                    print "<input type='text' name='user' value='" . $_POST['user'] . "' readonly><br>";
-                ?>
                 Scrapbook Name: <br>
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
                 <input type="submit" name="submit" value="Create!">
@@ -35,10 +31,6 @@
         <div id="DScrap" class="tabcontent">
             <h3>Delete Scrapbook</h3>
             <form method="POST" action="">
-                Username: <br>
-                <?php
-                    print "<input type='text' name='user' value='" . $_POST['user'] . "' readonly><br>";
-                ?>
                 Scrapbook Name: <br>
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
                 <input type="submit" name="submit" value="Delete!">
@@ -47,20 +39,12 @@
         <div id="AEScrap" class="tabcontent">
             <h3>Add to Existing Scrapbook</h3>
             <form method="POST" action="insert.php">
-                Username: <br>
-                <?php
-                    print "<input type='text' name='user' value='" . $_POST['user'] . "' readonly><br>";
-                ?>
                 <input type="submit" name="submit" value="Go to Customize Page!">
             </form>
         </div>
         <div id="DEScrap" class="tabcontent">
             <h3>Delete from Existing Scrapbook</h3>
             <form method="POST" action="">
-                Username: <br>
-                <?php
-                    print "<input type='text' name='user' value='" . $_POST['user'] . "' readonly><br>";
-                ?>
                 Scrapbook Name: <br>
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
                 Picture Title: <br>
