@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,9 +9,9 @@
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
     </head>
     <body>
-        <?php
-            print "<header><a class='home' href='home.php'>DigiScrap</a>: A Place for Scrap Bookers! " . "Welcome " . $_POST['user'] . "!</header>";
-        ?>
+        <header>
+            <a class = "home" href = "home.php">DigiScrap</a>: A Place for Scrap Bookers! Welcome <?php echo $_SESSION['username'] ?>! 
+        </header>
         <ul>
             <li><a href="login.php"><button>Login</button></a></li>
             <li><a href="about.html"><button>About</button></a></li>
