@@ -13,7 +13,8 @@
     <body>
         <div class="gridWrapper">
             <div class="column">
-                <form id="scrapbookForm" method="GET">
+                <form id="scrapbookForm" method="POST" enctype="multipart/form-data">
+                    <input type="text" name="user" id="scrapbook" value="Username">
                     <input type="text" name="scrapbook" id="scrapbook" value="Scrapbook Name">
                 </form>
             </div>
@@ -22,12 +23,12 @@
                     the dropzone class gives us the dropzone.js drag and drop form with an id for custom options to be enabled
                     WARNING: the action must not be changed
                 -->
-                <form action="/file-upload" class="dropzone" id="my-awesome-dropzone" method="GET">
+                <form action="processAdd.php" class="dropzone" id="my-awesome-dropzone" method="POST" enctype="multipart/form-data">
                     <input type="text" name="title" value="Enter a Title!" id="picTitle">
                 </form>
-                <form id="captionForm" method="GET" style="border: none">
+                <form id="captionForm" method="POST" style="border: none" enctype="multipart/form-data">
                     <textarea cols="280" type="text" name="caption" id="picCaption">Enter a Caption!</textarea><br><br>
-                    <input type="submit" name="submit" value="Add" class="submit" id="yep">
+                    <input type="button" name="submit" value="Add" class="submit" id="button">
                 </form>
 
                 <!--
@@ -36,19 +37,7 @@
                     and the size of the picture (have to override the dropzone.css too)
                 -->
                 <script>
-                    document.getElementById("yep").style.cursor = "pointer";
-
-                    $(".submit").click(function() { // changed
-                        $.ajax({
-                            type: "GET",
-                            url: "approve_test.php",
-                            data: $(this).parent().serialize(), // changed
-                            success: function(data) {
-                                alert(data); // show response from the php script.
-                            }
-                        });
-                        return false; // avoid to execute the actual form submission.
-                    });
+                    document.getElementById("button").style.cursor = "pointer";
 
                     Dropzone.options.myAwesomeDropzone = {
                         paramName: "file",
@@ -60,8 +49,37 @@
                         },
                         dictDefaultMessage: "Drag and Drop Image",
                         thumbnailWidth: 500,
-                        thumbnailHeight: 500
-                    };
+                        thumbnailHeight: 500,
+                        autoProcessQueue: false,
+                        url: 'processAdd.php',
+                        init: function () {
+                            var myDropzone = this;
+
+                            // Update selector to match your button
+                            $("#button").click(function (e) {
+                                e.preventDefault();
+                                myDropzone.processQueue();
+                            });
+
+                            this.on('sending', function(file, xhr, formData) {
+                                // Append all form inputs to the formData Dropzone will POST
+                                var data = $('#myAwesomeDropzone').serializeArray();
+                                $.each(data, function(key, el) {
+                                    formData.append(el.name, el.value);
+                                });
+
+                                var data2 = $('#captionForm').serializeArray();
+                                $.each(data2, function(key, el) {
+                                    formData.append(el.name, el.value);
+                                });
+                    
+                                var data3 = $('#scrapbookForm').serializeArray();
+                                $.each(data3, function(key, el) {
+                                    formData.append(el.name, el.value);
+                                });
+                            });
+                        }
+                    }
                 </script>
                 <!--
                     override for dropzone.css styles so that the thumbnail size is increased and that the error mark and success mark

@@ -5,6 +5,12 @@ body
     min-height: 100vh;
 }
 
+ul
+{
+    text-align: left;
+    font-size: 20px;
+}
+
 .gridWrapper
 {
     display: flex;
