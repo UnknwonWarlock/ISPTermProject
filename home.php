@@ -15,10 +15,10 @@
         <ul>
             <li><a href="login.php"><button>Login</button></a></li>
             <li><a href="about.html"><button>About</button></a></li>
-            <li><button onclick="openCity(event, 'AEScrap')">Add to Existing Scrapbook</button></li>
-            <li><button onclick="openCity(event, 'DEScrap')">Delete from Existing Scrapbook</button></li>
-            <li><button onclick="openCity(event, 'CScrap')">Create Scrapbook</button></li>
-            <li><button onclick="openCity(event, 'DScrap')">Delete Scrapbook</button></li>
+            <li><button onclick="openCity(event, 'AEScrap')" class="tablinks">Add to Existing Scrapbook</button></li>
+            <li><button onclick="openCity(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
+            <li><button onclick="openCity(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
+            <li><button onclick="openCity(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
         </ul>
         <div id="CScrap" class="tabcontent">
             <h3>Create Scrapbook</h3>

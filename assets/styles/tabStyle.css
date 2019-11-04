@@ -50,6 +50,17 @@ li button{
 	color: black;
 }
 
+.tablinks
+{
+    display: block;
+	text-align: center;
+    padding: 10px 12px;
+    border: transparent;
+    background-color: rgb(255, 229, 190);
+	text-decoration: none;
+	color: black;   
+}
+
 li button:hover:not(.active){
 	background: rgb(204, 177, 137);
     text-decoration: none;
@@ -61,7 +72,5 @@ li button:hover:not(.active){
 .tabcontent {
   display: none;
   padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
   background-color: lightyellow;
 }
