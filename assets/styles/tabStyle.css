@@ -39,13 +39,15 @@ ul{
 li{
 	float: left;
 }
-
+li a {
+    text-decoration: none;
+}
 li button{
 	display: block;
 	text-align: center;
     padding: 10px 12px;
     border: transparent;
-    background-color: rgb(255, 229, 190);
+    background-color: navajowhite;
 	text-decoration: none;
 	color: black;
 }
@@ -56,13 +58,12 @@ li button{
 	text-align: center;
     padding: 10px 12px;
     border: transparent;
-    background-color: rgb(255, 229, 190);
 	text-decoration: none;
 	color: black;   
 }
 
 li button:hover:not(.active){
-	background: rgb(204, 177, 137);
+	background: rgb(255, 229, 190);
     text-decoration: none;
 }
 
