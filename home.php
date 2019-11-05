@@ -22,7 +22,16 @@
             exit;
         }
 
-        $query = "SELECT * FROM";
+        $query = 'SELECT COUNT(1) FROM ' . $_SESSION["username"] . 'WHERE scrapbook="' . $_POST['scrapbook'] . '"';
+        trim($query);
+        $result = mysqli_query($db, $query);
+        if($result == 0)
+        {
+            $settings = $_POST['backColor'] . "/" . $_POST['captColor'] . "/" . $_POST['bordType'] . "/" . $_POST['bordColor'];
+            $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
+            trim($query2);
+            mysqli_query($db,$query2);
+        }
     }
 
 ?>
@@ -50,6 +59,14 @@
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
+                Scrapbook Background Color: 
+                <input type="text" name="backColor" value="rosybrown" required>
+                Scrapbook Caption Color:
+                <input type="text" name="captColor" value="lightyellow" required><br>
+                Border Type:
+                <input type="text" name="bordType" value="dashed" required>
+                Border Color:
+                <input type="text" name="bordColor" value="black" required><br>
                 <input type="submit" name="submit" value="Create Scrapbook!">
             </form>
         </div>
