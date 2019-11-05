@@ -1,5 +1,30 @@
 <?php
     session_start();
+
+    $MySQL_db = "db1.cs.uakron.edu:3306"; 
+    $MySQL_username = "mcr66";
+    $MySQL_password = "ohl5eiB0";
+
+    if($_POST["submit"] == "Create Scrapbook!")
+    {
+        $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
+        if(!$db) {
+
+            print "Error - Could not connect to MySQL";
+            exit;
+        }
+
+        // Select schema from database
+        $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
+        if (!$error) {
+
+            print "Error - Could not select the database";
+            exit;
+        }
+
+        $query = "SELECT * FROM";
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +50,7 @@
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
-                <input type="submit" name="submit" value="Create!">
+                <input type="submit" name="submit" value="Create Scrapbook!">
             </form>
         </div>
         <div id="DScrap" class="tabcontent">
@@ -33,7 +58,7 @@
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
-                <input type="submit" name="submit" value="Delete!">
+                <input type="submit" name="submit" value="Delete Scrapbook!">
             </form>
         </div>
         <div id="DEScrap" class="tabcontent">
@@ -43,7 +68,7 @@
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
                 Picture Title: <br>
                 <input type="text" name="title" placeholder="Picture Title" required><br>
-                <input type="submit" name="submit" value="Delete!">   
+                <input type="submit" name="submit" value="Delete Picture!">   
             </form>
         </div>
         <script>
