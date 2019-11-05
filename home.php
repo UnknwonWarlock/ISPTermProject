@@ -22,10 +22,14 @@
             exit;
         }
 
-        $query = 'SELECT COUNT(1) FROM ' . $_SESSION["username"] . 'WHERE scrapbook="' . $_POST['scrapbook'] . '"';
+        $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
         trim($query);
         $result = mysqli_query($db, $query);
-        if($result == 0)
+        if(mysqli_num_rows($result) > 0)
+        {
+            echo "<script>alert('Already a Scrapbook');</script>";
+        }
+        else
         {
             $settings = $_POST['backColor'] . "/" . $_POST['captColor'] . "/" . $_POST['bordType'] . "/" . $_POST['bordColor'];
             $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
