@@ -123,6 +123,9 @@
                     {
                         display: none;
                     }
+                    .dz-preview.dz-image-preview{
+                        border-radius: 25px !important;
+                    }
                 </style>
             </div>
             <div class="column"></div>
