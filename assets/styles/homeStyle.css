@@ -14,7 +14,7 @@ header{
 body{
     margin:0;
     padding:0;
-    background-color: lightyellow;
+    background-color: #fbceb1;
 }
 
 .home:hover, .home:link, .home:active{
