@@ -35,6 +35,14 @@
             $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
             trim($query2);
             mysqli_query($db,$query2);
+
+            $query3 = "CREATE TABLE " . $_SESSION['username'] . "_" . $_POST['scrapbook'] 
+                . "(title TEXT, " .
+                  "image_name TEXT, " .
+                  "image_path TEXT, " .
+                  "caption TEXT);";
+            trim($query3);
+            mysqli_query($db, $query3);
             mysqli_close($db);
         }
     }
@@ -117,8 +125,32 @@
             <div class="column">
                 <form id="scrapbookForm" method="POST" enctype="multipart/form-data">
                     <!-- make input for user readonly after testing -->
-                    <input type="text" name="user" id="scrapbook" placeholder="Username">
-                    <input type="text" name="scrapbook" id="scrapbook" placeholder="Scrapbook Name" required>
+                    Scrapbook:<br>
+                    <select name="scrapbook" name="scrapbook" id="scrapbook">
+                    <?php
+                        $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
+                        if(!$db) {
+                        
+                            print "Error - Could not connect to MySQL";
+                            exit;
+                        }
+                        
+                        // Select schema from database
+                        $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
+                        if (!$error) {
+                        
+                            print "Error - Could not select the database";
+                            exit;
+                        }
+                        
+                        $query = 'SELECT scrapbook FROM ' . $_SESSION["username"];
+                        trim($query);
+                        $result = mysqli_query($db, $query);
+                        while($row = mysqli_fetch_array($result)){
+                            echo "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
+                        }
+                    ?>
+                    </select><br><br>
                 </form>
             </div>
             <div class="column" id="insertCol" style="border: 2px dashed black;">

@@ -3,6 +3,7 @@
 
 
     <?php
+        session_start();
         /**
          * For easy configuration, I've added these global variables
          * **NOTE**
@@ -17,7 +18,7 @@
         /**
          * Copy uploaded file to a permanent location
          */
-        $user = $_POST["user"];
+        $user = $_SESSION["username"];
         $scrapbook = $_POST["scrapbook"];
         $title = $_POST["title"];
         $file = $_FILES['file'];
@@ -66,9 +67,7 @@
             $fileuri = $uriprefix . $filepath;
 
             // Create insert query string for newly uploaded file
-            $query = "INSERT INTO scrapbook_user VALUES ("
-                . "'" . $user           . "', "
-                . "'" . $scrapbook      . "', "
+            $query = "INSERT INTO " . $user . "_" . $scrapbook . " VALUES ("
                 . "'" . $title          . "', "
                 . "'" . $file["name"]   . "', "
                 . "'" . $filepath       . "', "
