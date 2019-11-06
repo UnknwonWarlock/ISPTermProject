@@ -87,9 +87,9 @@
             <li><a href="login.php"><button>Login</button></a></li>
             <li><a href="about.html"><button>About</button></a></li>
             <li><a href="insert.php"><button>Add to Existing Scrapbook</button></a></li>
-            <li><button onclick="openCity(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
-            <li><button onclick="openCity(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
-            <li><button onclick="openCity(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
         </ul>
         <div id="CScrap" class="tabcontent">
             <h3>Create Scrapbook</h3>
@@ -174,7 +174,7 @@
             </form>
         </div>
         <script>
-            function openCity(evt, tabName) {
+            function openTab(evt, tabName) {
                 // Declare all variables
                 var i, tabcontent, tablinks;
 
