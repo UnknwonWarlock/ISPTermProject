@@ -27,7 +27,7 @@
         $result = mysqli_query($db, $query);
         if(mysqli_num_rows($result) > 0)
         {
-            echo "<script>alert('Already a Scrapbook');</script>";
+            mysqli_close($db);
         }
         else
         {
@@ -35,6 +35,39 @@
             $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
             trim($query2);
             mysqli_query($db,$query2);
+            mysqli_close($db);
+        }
+    }
+    elseif($_POST["submit"] == "Delete Scrapbook!")
+    {
+        $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
+        if(!$db) {
+
+            print "Error - Could not connect to MySQL";
+            exit;
+        }
+
+        // Select schema from database
+        $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
+        if (!$error) {
+
+            print "Error - Could not select the database";
+            exit;
+        }
+
+        $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
+        trim($query);
+        $result = mysqli_query($db, $query);
+        if(mysqli_num_rows($result) > 0)
+        {
+            $query2 = 'DELETE FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
+            trim($query2);
+            mysqli_query($db,$query2);
+            mysqli_close($db);
+        }
+        else
+        {
+            mysqli_close($db);
         }
     }
 
