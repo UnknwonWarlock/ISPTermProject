@@ -71,6 +71,9 @@
             $query2 = 'DELETE FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
             trim($query2);
             mysqli_query($db,$query2);
+
+            $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
+            mysqli_query($db,$query3);
             mysqli_close($db);
         }
         else
