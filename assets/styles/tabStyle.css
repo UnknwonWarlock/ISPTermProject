@@ -10,11 +10,10 @@ header{
     height: 50px;
 }
 
-
 body{
     margin:0;
     padding:0;
-    background-color: #fbceb1;
+    background-color: lightyellow;
 }
 
 .home:hover, .home:link, .home:active{
@@ -39,10 +38,12 @@ ul{
 li{
 	float: left;
 }
-li a {
+a{
     text-decoration: none;
+    color: black;
 }
 li button{
+    height: 45px;
 	display: block;
 	text-align: center;
     padding: 10px 12px;
@@ -52,15 +53,6 @@ li button{
 	color: black;
 }
 
-.tablinks
-{
-    display: block;
-	text-align: center;
-    padding: 10px 12px;
-    border: transparent;
-	text-decoration: none;
-	color: black;   
-}
 
 li button:hover:not(.active){
 	background: rgb(255, 229, 190);
@@ -68,10 +60,11 @@ li button:hover:not(.active){
 }
 
 .active{
-	background: rgb(204, 177, 137);
+    background: rgb(204, 177, 137);
+    color: black;
 }
+
 .tabcontent {
   display: none;
   padding: 6px 12px;
-  background-color: #fbceb1;
 }

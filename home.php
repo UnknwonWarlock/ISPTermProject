@@ -5,31 +5,27 @@
     $MySQL_username = "mcr66";
     $MySQL_password = "ohl5eiB0";
 
+    $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
+    if(!$db) {
+
+        print "Error - Could not connect to MySQL";
+        exit;
+    }
+
+    // Select schema from database
+    $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
+    if (!$error) {
+
+        print "Error - Could not select the database";
+        exit;
+    }
+
     if($_POST["submit"] == "Create Scrapbook!")
     {
-        $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
-        if(!$db) {
-
-            print "Error - Could not connect to MySQL";
-            exit;
-        }
-
-        // Select schema from database
-        $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
-        if (!$error) {
-
-            print "Error - Could not select the database";
-            exit;
-        }
-
         $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
         trim($query);
         $result = mysqli_query($db, $query);
-        if(mysqli_num_rows($result) > 0)
-        {
-            mysqli_close($db);
-        }
-        else
+        if(mysqli_num_rows($result) == 0)
         {
             $settings = $_POST['backColor'] . "/" . $_POST['captColor'] . "/" . $_POST['bordType'] . "/" . $_POST['bordColor'];
             $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
@@ -43,26 +39,10 @@
                   "caption TEXT);";
             trim($query3);
             mysqli_query($db, $query3);
-            mysqli_close($db);
         }
     }
     elseif($_POST["submit"] == "Delete Scrapbook!")
     {
-        $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
-        if(!$db) {
-
-            print "Error - Could not connect to MySQL";
-            exit;
-        }
-
-        // Select schema from database
-        $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
-        if (!$error) {
-
-            print "Error - Could not select the database";
-            exit;
-        }
-
         $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
         trim($query);
         $result = mysqli_query($db, $query);
@@ -74,14 +54,14 @@
 
             $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
             mysqli_query($db,$query3);
-            mysqli_close($db);
-        }
-        else
-        {
-            mysqli_close($db);
         }
     }
-
+    
+    $scrapbooks = "";
+    $result = mysqli_query($db, 'SELECT scrapbook FROM ' . $_SESSION["username"]);
+    while($row = mysqli_fetch_array($result)){
+        $scrapbooks .= "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +71,7 @@
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles/baseStyle.css">
-        <link rel="stylesheet" type="text/css" href="assets/styles/homeStyle.css">
+        <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
         <link rel="stylesheet" type="text/css" href="assets/dist/dropzone.css">
         <script src="assets/js/dropzone.js"></script>
     </head>
@@ -100,12 +80,12 @@
             <a class = "home" href = "home.php">DigiScrap</a>: A Place for Scrap Bookers! Welcome <?php echo $_SESSION['username'] ?>! 
         </header>
         <ul>
-            <li><a href="login.php"><button>Login</button></a></li>
-            <li><a href="about.html"><button>About</button></a></li>
-            <li><button style="height: 60px;" onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Existing Scrapbook</button></li>
-            <li><button style="height: 60px;" onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
-            <li><button style="height: 60px;" onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
-            <li><button style="height: 60px;" onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
+            <li><button><a href="login.php">Logout</a></button></li>
+            <li><button><a href="about.html">About</a></button></li>
+            <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Existing Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
         </ul>
         <div id="CScrap" class="tabcontent">
             <h3>Create Scrapbook</h3>
@@ -131,27 +111,7 @@
                     Scrapbook:<br>
                     <select name="scrapbook" name="scrapbook" id="scrapbook">
                     <?php
-                        $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
-                        if(!$db) {
-                        
-                            print "Error - Could not connect to MySQL";
-                            exit;
-                        }
-                        
-                        // Select schema from database
-                        $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
-                        if (!$error) {
-                        
-                            print "Error - Could not select the database";
-                            exit;
-                        }
-                        
-                        $query = 'SELECT scrapbook FROM ' . $_SESSION["username"];
-                        trim($query);
-                        $result = mysqli_query($db, $query);
-                        while($row = mysqli_fetch_array($result)){
-                            echo "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
-                        }
+                        echo $scrapbooks;
                     ?>
                     </select><br><br>
                 </form>
@@ -268,27 +228,7 @@
                 Scrapbook Name: <br>
                 <select name="scrapbook" style="width: 126px">
                 <?php
-                    $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
-                    if(!$db) {
-                    
-                        print "Error - Could not connect to MySQL";
-                        exit;
-                    }
-                    
-                    // Select schema from database
-                    $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
-                    if (!$error) {
-                    
-                        print "Error - Could not select the database";
-                        exit;
-                    }
-                    
-                    $query = 'SELECT scrapbook FROM ' . $_SESSION["username"];
-                    trim($query);
-                    $result = mysqli_query($db, $query);
-                    while($row = mysqli_fetch_array($result)){
-                        echo "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
-                    }
+                    echo $scrapbooks;
                 ?>
                 </select><br><br>
                 <input type="submit" name="submit" value="Delete Scrapbook!">
@@ -300,27 +240,7 @@
                 Scrapbook Name: <br>
                 <select name="scrapbook" style="width: 153px">
                 <?php
-                    $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
-                    if(!$db) {
-                    
-                        print "Error - Could not connect to MySQL";
-                        exit;
-                    }
-                    
-                    // Select schema from database
-                    $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
-                    if (!$error) {
-                    
-                        print "Error - Could not select the database";
-                        exit;
-                    }
-                    
-                    $query = 'SELECT scrapbook FROM ' . $_SESSION["username"];
-                    trim($query);
-                    $result = mysqli_query($db, $query);
-                    while($row = mysqli_fetch_array($result)){
-                        echo "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
-                    }
+                    echo $scrapbooks;
                 ?>
                 </select><br>
                 Picture Title: <br>
@@ -352,3 +272,8 @@
         </script>
     </body>
 </html>
+
+<?php
+    mysqli_close($db);
+?>
+
