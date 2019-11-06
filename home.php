@@ -108,18 +108,66 @@
             </form>
         </div>
         <div id="DScrap" class="tabcontent">
-            <h3>Delete Scrapbook</h3>
+            <h3><u>Delete Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
+                <select name="scrapbook" style="width: 126px">
+                <?php
+                    $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
+                    if(!$db) {
+                    
+                        print "Error - Could not connect to MySQL";
+                        exit;
+                    }
+                    
+                    // Select schema from database
+                    $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
+                    if (!$error) {
+                    
+                        print "Error - Could not select the database";
+                        exit;
+                    }
+                    
+                    $query = 'SELECT scrapbook FROM ' . $_SESSION["username"];
+                    trim($query);
+                    $result = mysqli_query($db, $query);
+                    while($row = mysqli_fetch_array($result)){
+                        echo "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
+                    }
+                ?>
+                </select><br><br>
                 <input type="submit" name="submit" value="Delete Scrapbook!">
             </form>
         </div>
         <div id="DEScrap" class="tabcontent">
-            <h3>Delete from Existing Scrapbook</h3>
+            <h3><u>Delete from Existing Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
+                <select name="scrapbook" style="width: 153px">
+                <?php
+                    $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
+                    if(!$db) {
+                    
+                        print "Error - Could not connect to MySQL";
+                        exit;
+                    }
+                    
+                    // Select schema from database
+                    $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
+                    if (!$error) {
+                    
+                        print "Error - Could not select the database";
+                        exit;
+                    }
+                    
+                    $query = 'SELECT scrapbook FROM ' . $_SESSION["username"];
+                    trim($query);
+                    $result = mysqli_query($db, $query);
+                    while($row = mysqli_fetch_array($result)){
+                        echo "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
+                    }
+                ?>
+                </select><br>
                 Picture Title: <br>
                 <input type="text" name="title" placeholder="Picture Title" required><br>
                 <input type="submit" name="submit" value="Delete Picture!">   
