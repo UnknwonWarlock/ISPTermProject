@@ -19,6 +19,11 @@
         print "Error - Could not select the database";
         exit;
     }
+    echo "<script> alert('" . $_POST['myform'] . "');</script>";
+    if( isset($_POST['scrap']) )
+    {
+        $_SESSION["scrapbook"] = $_POST['scrapbook'];
+    }
 
     if($_POST["submit"] == "Create Scrapbook!")
     {
@@ -57,10 +62,17 @@
         }
     }
     
+    $pics = array();
     $scrapbooks = "";
     $result = mysqli_query($db, 'SELECT scrapbook FROM ' . $_SESSION["username"]);
     while($row = mysqli_fetch_array($result)){
         $scrapbooks .= "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
+        $result2 = mysqli_query( $db, 'SELECT title FROM ' . $_SESSON["username"] . "_" . $row['scrapbook'] );
+        if( mysqli_num_rows($result2) > 0 ){
+            while( $row2 = mysqli_fetch_array( $result2 ) ){
+                $pics[ $row['scrapbook'] ] .= "<option value='" . $row['title'] . "'>" . $row['title'] . "</option>";
+            }
+        }
     }
 ?>
 
@@ -81,11 +93,19 @@
         </header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
-            <li><button><a href="about.html">About</a></button></li>
+            <li><button>Scraps<form>
+                <form method = "POST" action = "home.php" name = "myform">
+                <select name="scrap" style="width: 126px" onchange = "this.form.submit()">
+                <?php
+                    echo $scrapbooks;
+                ?>
+                </select></form></button></li>
             <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Existing Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
             <li><button onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
+            <li><button> Current Working Scrap: <?php echo $_SESSION["scrapbook"] ?> </button></li>
+                
         </ul>
         <div id="CScrap" class="tabcontent">
             <h3>Create Scrapbook</h3>
