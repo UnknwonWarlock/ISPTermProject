@@ -14,7 +14,7 @@ header{
 body{
     margin:0;
     padding:0;
-    background-color: #fbceb1;
+    background-color: lightyellow;
 }
 
 .home:hover, .home:link, .home:active{
@@ -55,4 +55,18 @@ li a:hover:not(.active){
 
 .active{
 	background: rgb(204, 177, 137);
+}
+
+#textbox{
+    border-radius: 25px;
+    border: 2px dashed black;
+    width: 20%;
+    height: 25px;
+    padding: 0 .25rem;
+}
+#button{
+    border-radius: 25px;
+    border: 2px dashed black;
+    width: 10%;
+    height: 25px;   
 }

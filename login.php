@@ -45,6 +45,7 @@
                         if( mysqli_num_rows($result) > 0 )
                         {
                             $_SESSION['username'] = $_POST['user'];
+                            unset($_SESSION['scrapbook']);
                             header("Location: home.php");
                         }
                         break;
@@ -72,8 +73,8 @@
         ?>
         <form class="login" action="login.php" method="POST"> 
             Please enter your username and password!<br>
-            <input type="text" name="user" placeholder="Username" required><br>
-            <input type="password" name="pass" placeholder="Password" required><br>
+            <input type="text" name="user" id="textbox" placeholder="Username" required><br>
+            <input type="password" name="pass" id="textbox" placeholder="Password" required><br>
             <?php
                 if( isset( $_POST["submit"] ) )
                 {
@@ -89,7 +90,7 @@
                     print '</span><br>';
                 }
             ?>
-            <input type="submit" name="submit" value="Log in"><input type = "submit" name = "submit" value = "Register">
+            <input type="submit" name="submit" id="button" value="Log in"><input type="submit" name="submit" id="button" value="Register">
         </form>
     </body>
 </html>

@@ -57,19 +57,21 @@
 
             $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
             mysqli_query($db,$query3);
+            unset($_SESSION['scrapbook']);
         }
     }
     
-    $pics = array();
     $scrapbooks = "";
     $result = mysqli_query($db, 'SELECT scrapbook FROM ' . $_SESSION["username"]);
     while($row = mysqli_fetch_array($result)){
         $scrapbooks .= "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
-        $result2 = mysqli_query( $db, 'SELECT title FROM ' . $_SESSON["username"] . "_" . $row['scrapbook'] );
-        if( mysqli_num_rows($result2) > 0 ){
-            while( $row2 = mysqli_fetch_array( $result2 ) ){
-                $pics[ $row['scrapbook'] ] .= "<option value='" . $row['title'] . "'>" . $row['title'] . "</option>";
-            }
+    }
+
+    $query = 'SELECT title FROM ' . $_SESSION["username"] . '_' . $_SESSION["scrapbook"];
+    $result2 = mysqli_query( $db, $query);
+    if( mysqli_num_rows($result2) > 0 ){
+        while($row2 = mysqli_fetch_array($result2)){
+            $imageTitles .= "<option value='" . $row2['title'] . "'>" . $row2['title'] . "</option>";
         }
     }
 ?>
@@ -99,10 +101,10 @@
                 
         </ul>
         <div id="scrapSelect" class="tabcontent">
-            <h3>Select Current Scrapbook</h3>
+            <h3><u>Select Current Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <select name="scrapbook">
+                <select name="scrapbook" id="scrapbook" style="width: 25%;">
                 <?php
                     echo $scrapbooks;
                 ?>
@@ -111,7 +113,7 @@
             </form>
         </div>
         <div id="CScrap" class="tabcontent">
-            <h3>Create Scrapbook</h3>
+            <h3><u>Create Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
                 <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
@@ -176,6 +178,7 @@
                             $("#button").click(function (e) {
                                 e.preventDefault();
                                 myDropzone.processQueue();
+                                location.reload();
                             });
 
                             this.on('sending', function(file, xhr, formData) {
@@ -255,7 +258,11 @@
                 Scrapbook Name: <br>
                 <input name="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>"readonly>
                 Picture Title: <br>
-                <input type="text" name="title" placeholder="Picture Title" required><br>
+                <select name="title">
+                <?php
+                    echo $imageTitles;
+                ?>
+                </select><br>
                 <input type="submit" name="submit" value="Delete Picture!">   
             </form>
         </div>
