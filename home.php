@@ -19,13 +19,11 @@
         print "Error - Could not select the database";
         exit;
     }
-    echo "<script> alert('" . $_POST['myform'] . "');</script>";
-    if( isset($_POST['scrap']) )
+    if($_POST['submit'] == "Select Scrapbook!")
     {
         $_SESSION["scrapbook"] = $_POST['scrapbook'];
     }
-
-    if($_POST["submit"] == "Create Scrapbook!")
+    else if($_POST["submit"] == "Create Scrapbook!")
     {
         $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
         trim($query);
@@ -93,20 +91,25 @@
         </header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
-            <li><button>Scraps<form>
-                <form method = "POST" action = "home.php" name = "myform">
-                <select name="scrap" style="width: 126px" onchange = "this.form.submit()">
-                <?php
-                    echo $scrapbooks;
-                ?>
-                </select></form></button></li>
+            <li><button onclick="openTab(event, 'scrapSelect')" class="tablinks")>Scrapbook</button></li>
             <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Existing Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
             <li><button onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
-            <li><button> Current Working Scrap: <?php echo $_SESSION["scrapbook"] ?> </button></li>
                 
         </ul>
+        <div id="scrapSelect" class="tabcontent">
+            <h3>Select Current Scrapbook</h3>
+            <form method="POST" action="home.php">
+                Scrapbook Name: <br>
+                <select name="scrapbook">
+                <?php
+                    echo $scrapbooks;
+                ?>
+                </select><br>
+                <input type="submit" name="submit" value="Select Scrapbook!">
+            </form>
+        </div>
         <div id="CScrap" class="tabcontent">
             <h3>Create Scrapbook</h3>
             <form method="POST" action="home.php">
@@ -129,11 +132,7 @@
                 <form id="scrapbookForm" method="POST" enctype="multipart/form-data">
                     <!-- make input for user readonly after testing -->
                     Scrapbook:<br>
-                    <select name="scrapbook" name="scrapbook" id="scrapbook">
-                    <?php
-                        echo $scrapbooks;
-                    ?>
-                    </select><br><br>
+                    <input name="scrapbook" id="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>"readonly><br><br>
                 </form>
             </div>
             <div class="column" id="insertCol" style="border: 2px dashed black;">
@@ -246,11 +245,7 @@
             <h3><u>Delete Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <select name="scrapbook" style="width: 126px">
-                <?php
-                    echo $scrapbooks;
-                ?>
-                </select><br><br>
+                <input name="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>"readonly>
                 <input type="submit" name="submit" value="Delete Scrapbook!">
             </form>
         </div>
@@ -258,11 +253,7 @@
             <h3><u>Delete from Existing Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <select name="scrapbook" style="width: 153px">
-                <?php
-                    echo $scrapbooks;
-                ?>
-                </select><br>
+                <input name="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>"readonly>
                 Picture Title: <br>
                 <input type="text" name="title" placeholder="Picture Title" required><br>
                 <input type="submit" name="submit" value="Delete Picture!">   
