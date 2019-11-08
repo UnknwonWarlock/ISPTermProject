@@ -60,6 +60,20 @@
             unset($_SESSION['scrapbook']);
         }
     }
+    else if($_POST["submit"] == "Delete Picture!")
+    {
+        $query = 'SELECT image_path FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ' WHERE title="' . $_POST["title"] . '";';
+        trim($query);
+        $result = mysqli_query($db, $query);
+        $row = mysqli_fetch_array($result);
+        if(file_exists(realpath(getcwd() . $row["image_path"])))
+        {
+            unlink(realpath(getcwd() . $row["image_path"]));
+            $query = 'DELETE FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ' WHERE title="' . $_POST["title"] . '"';
+            trim($query);
+            mysqli_query($db, $query);
+        }
+    }
     
     $scrapbooks = "";
     $result = mysqli_query($db, 'SELECT scrapbook FROM ' . $_SESSION["username"]);
@@ -89,16 +103,15 @@
     </head>
     <body>
         <header>
-            <a class = "home" href = "home.php">DigiScrap</a>: A Place for Scrap Bookers! Welcome <?php echo $_SESSION['username'] ?>! 
+            <a class="home" href="home.php">DigiScrap</a>: A Place for Scrap Bookers! Welcome <?php echo $_SESSION['username'] ?>! 
         </header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
-            <li><button onclick="openTab(event, 'scrapSelect')" class="tablinks")>Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'scrapSelect')" class="tablinks">Scrapbook</button></li>
             <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Existing Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
             <li><button onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
-            <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
-                
+            <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>       
         </ul>
         <div id="scrapSelect" class="tabcontent">
             <h3><u>Select Current Scrapbook</u></h3>
@@ -108,24 +121,32 @@
                 <?php
                     echo $scrapbooks;
                 ?>
-                </select><br>
-                <input type="submit" name="submit" value="Select Scrapbook!">
+                </select><br><br>
+                <input type="submit" name="submit" id="button2" value="Select Scrapbook!">
             </form>
         </div>
         <div id="CScrap" class="tabcontent">
             <h3><u>Create Scrapbook</u></h3>
             <form method="POST" action="home.php">
-                Scrapbook Name: <br>
-                <input type="text" name="scrapbook" placeholder="scrapbook name" required><br>
-                Scrapbook Background Color: 
-                <input type="text" name="backColor" value="rosybrown" required>
-                Scrapbook Caption Color:
-                <input type="text" name="captColor" value="lightyellow" required><br>
-                Border Type:
-                <input type="text" name="bordType" value="dashed" required>
-                Border Color:
-                <input type="text" name="bordColor" value="black" required><br>
-                <input type="submit" name="submit" value="Create Scrapbook!">
+                <div class="gridWrapper">
+                    <div class="column">
+                        Scrapbook Name: <br>
+                        <input type="text" id="textbox" style="width: 40%;" name="scrapbook" placeholder="scrapbook name" required><br><br>
+                        <input type="submit" id="button2" style="width: 40%;" name="submit" value="Create Scrapbook!">
+                    </div>
+                    <div class="column">
+                        Scrapbook Background Color: <br>
+                        <input type="text" id="textbox" name="backColor" value="rosybrown" required><br>
+                        Scrapbook Caption Color:<br>
+                        <input type="text" id="textbox" name="captColor" value="lightyellow" required><br>
+                    </div>
+                    <div class="column">
+                        Border Type:<br>
+                        <input type="text" id="textbox" name="bordType" value="dashed" required><br>
+                        Border Color:<br>
+                        <input type="text" id="textbox" name="bordColor" value="black" required><br><br>
+                    </div>
+                </div>
             </form>
         </div>
         <div id="AEScrap" class="tabcontent">
@@ -134,7 +155,7 @@
                 <form id="scrapbookForm" method="POST" enctype="multipart/form-data">
                     <!-- make input for user readonly after testing -->
                     Scrapbook:<br>
-                    <input name="scrapbook" id="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>"readonly><br><br>
+                    <input name="scrapbook" id="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>" readonly><br><br>
                 </form>
             </div>
             <div class="column" id="insertCol" style="border: 2px dashed black;">
@@ -149,7 +170,6 @@
                     <textarea cols="280" type="text" name="caption" id="picCaption">Enter a Caption!</textarea><br><br>
                     <input type="button" name="submit" value="Add" class="submit" id="button">
                 </form>
-
                 <!--
                     This script allows me to change some of base options for the drag and drop form
                     such as one file at a time and remove and replace the old file with a new one, a diffent initial display message
@@ -248,22 +268,22 @@
             <h3><u>Delete Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <input name="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>"readonly>
-                <input type="submit" name="submit" value="Delete Scrapbook!">
+                <input name="scrapbook" id="textbox" value="<?php echo $_SESSION['scrapbook']; ?>" readonly><br><br>
+                <input type="submit" id="button2" name="submit" value="Delete Scrapbook!">
             </form>
         </div>
         <div id="DEScrap" class="tabcontent">
             <h3><u>Delete from Existing Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <input name="scrapbook" value="<?php echo $_SESSION['scrapbook']; ?>"readonly>
-                Picture Title: <br>
-                <select name="title">
+                <input name="scrapbook" id="textbox" value="<?php echo $_SESSION['scrapbook']; ?>" readonly><br>
+                Picture Title:<br>
+                <select name="title" id="textbox">
                 <?php
                     echo $imageTitles;
                 ?>
-                </select><br>
-                <input type="submit" name="submit" value="Delete Picture!">   
+                </select><br><br>
+                <input type="submit" name="submit" id="button2" value="Delete Picture!">   
             </form>
         </div>
         <script>
@@ -290,7 +310,6 @@
         </script>
     </body>
 </html>
-
 <?php
     mysqli_close($db);
 ?>
