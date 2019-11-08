@@ -55,6 +55,17 @@
             trim($query2);
             mysqli_query($db,$query2);
 
+            $query4 = 'SELECT image_path FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ';';
+            trim($query4);
+            $result2 = mysqli_query($db, $query4);
+            while($row = mysqli_fetch_array($result2))
+            {
+                if(file_exists(realpath(getcwd() . $row["image_path"])))
+                {
+                    unlink(realpath(getcwd() . $row["image_path"]));
+                }
+            }
+
             $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
             mysqli_query($db,$query3);
             unset($_SESSION['scrapbook']);
@@ -198,7 +209,6 @@
                             $("#button").click(function (e) {
                                 e.preventDefault();
                                 myDropzone.processQueue();
-                                location.reload();
                             });
 
                             this.on('sending', function(file, xhr, formData) {
@@ -238,6 +248,12 @@
                                         alert("Please have a correct username or scrapbook name");
                                     }
                                 });
+                            });
+
+                            this.on("complete", function (file) {
+                                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                                    document.getElementById("scrapbookForm").submit();
+                                }
                             });
                         }
                     }
