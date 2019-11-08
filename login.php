@@ -45,7 +45,12 @@
                         if( mysqli_num_rows($result) > 0 )
                         {
                             $_SESSION['username'] = $_POST['user'];
-                            unset($_SESSION['scrapbook']);
+                            $result = mysqli_query( "SELECT scrapbook FROM ". $_POST['user'] );
+                            if( mysqli_num_rows( $result ) > 0 )
+                            {
+                                $row = mysqli_fetch_array($result);
+                                $_SESSION['scrapbook'] = $row['scrapbook'];
+                            }
                             header("Location: home.php");
                         }
                         break;

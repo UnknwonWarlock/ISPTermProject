@@ -19,10 +19,12 @@
         print "Error - Could not select the database";
         exit;
     }
+
     if($_POST['submit'] == "Select Scrapbook!")
     {
         $_SESSION["scrapbook"] = $_POST['scrapbook'];
     }
+    
     else if($_POST["submit"] == "Create Scrapbook!")
     {
         $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
@@ -118,9 +120,9 @@
         </header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
-            <li><button onclick="openTab(event, 'scrapSelect')" class="tablinks">Scrapbook</button></li>
-            <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Existing Scrapbook</button></li>
-            <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Existing Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'scrapSelect')" class="tablinks">Select Working Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Scrapbook</button></li>
+            <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Scrapbook</button></li>
             <li><button onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>       
         </ul>
