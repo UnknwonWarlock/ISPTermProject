@@ -32,6 +32,7 @@
         $result = mysqli_query($db, $query);
         if(mysqli_num_rows($result) == 0)
         {
+
             $settings = $_POST['backColor'] . "/" . $_POST['captColor'] . "/" . $_POST['bordType'] . "/" . $_POST['bordColor'];
             $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
             trim($query2);
@@ -44,6 +45,14 @@
                   "caption TEXT);";
             trim($query3);
             mysqli_query($db, $query3);
+
+            $query4 = "SELECT scrapbook FROM ". $_SESSION['username'];
+            $result2 = mysqli_query($db, $query4);
+            if( mysqli_num_rows($result2) > 0 )
+            {
+                $row = mysqli_fetch_array($result2);
+                $_SESSION['scrapbook'] = $row['scrapbook'];
+            }
         }
     }
     elseif($_POST["submit"] == "Delete Scrapbook!")
@@ -120,6 +129,8 @@
         </header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
+            <li><button onclick="openTab(event, 'About')" class="tablinks">About</button></li>
+            <li><button onclick="openTab(event, 'Help')" class="tablinks">Help</button></li>
             <li><button onclick="openTab(event, 'scrapSelect')" class="tablinks">Select Working Scrapbook</button></li>
             <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Scrapbook</button></li>
@@ -137,6 +148,79 @@
                 </select><br><br>
                 <input type="submit" name="submit" id="button2" value="Select Scrapbook!">
             </form>
+        </div>
+        <div id="About" class="tabcontent" style="width: 50%;">
+            <h3><u>About</u></h3>
+            <p>
+                <b><u>DigiScrap</u></b>:
+            </p>
+            <p style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                Is a digital scrapbook made as a group collaboration project
+                for an interenet systems programming course term project at the University of Akron.
+                It allows users to register and login to an account then make and delete scrapbooks, add personal settings,
+                display the scrapbooks created, and continuously add and delete from scrapbooks.
+            </p>
+            <p>
+                <b><u>Attention</u></b>:
+            </p>
+            <p style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                This product is in a prototype state and therefore we are not responsible for any private information put
+                on this site. Therefore we recommend you only put information on here that will not risk yours or anyone else's
+                safety.
+            </p>
+            <p>
+                <b><u>Contributors</u></b>:
+            </p>
+            <p  style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                <b><u>dropzone.js</u></b>:<br> For the nice and intuitive drag and drop file implementation used in the adding feature <br>
+                <b><u>Mason Roberts</u></b>:<br> Database table creations and management, File uploading and deleting, Adding images to a scrapbook,
+                and general help with design features with the tabs and dropdown menu selectors. <br>
+                <b><u>Bree Harris</u></b>:<br> Insert your contributions here Bree!<br>
+            </p>
+        </div>
+        <div id="Help" class="tabcontent">
+            <h3><u>Help</u></h3>
+            <p>
+                <b><u>Blank Drop Down Menus?</u></b>:
+            </p>
+            <p  style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                <b><u>In Select Working Scrapbook Tab?</u></b>:
+                <br> Make sure you actually have created a scrapbook in the <u><i>Create Scrapbook</i></u> tab first. <br>
+                <b><u>In Delete Picture Tab?</u></b>:
+                <br>
+                    Did you put any pictures inside the scrapbook you are working on or is the working scrapbook the one you want to work on?
+                    This can be be checked in the <u><i>Select Working Scrapbook</i></u> Tab.
+                <br>
+            </p>
+            <p>
+                <b><u>Can not change the scrapbook input?</u></b>:
+            </p>
+            <p  style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                <u><i>Scrapbook Name</i></u> input tabs are handled by the <u><i>Select Working Scrapbook</i></u> tab and that will change the value of these
+                inputs. One of your scrapbooks will be selected automatically when you login if you have a scrapbook or when you first
+                create a scrapbook in the <u><i>Create Scrapbook</i></u> tab. If this is blank then it means you have no scrapbook therefore
+                you will have to create one before this gets a result.
+            </p>
+            <p>
+                <b><u>Adding Pictures?</u></b>:
+            </p>
+            <p  style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                When adding a picture into a scrapbook inside the <u><i>Add to Scrapbook</i></u> tab make sure you have the correct 
+                scrapbook selected that you want to add to. If any of the fields are invalid you will get an alert pop up for every field invalid
+                but this is a prototype and this method is subject to change. This prototype only handles files 10mb or under and the size
+                can be checked by hovering over the photo with your cursor (although we do not think a photo file is commonly over 10mb).
+                Please make sure that the photos added are actually a common photo type of picture or later displaying of the scrapbook could
+                be off.
+            </p>
+            <p>
+                <b><u>Other Help or Bugs to Report?</u></b>:
+            </p>
+            <p  style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                This is an ongoing work in progress application and there are definitely bugs that can still occur in this prototype.
+                If you require any help, want to report a bug, or even want to recommend a feature you can contact us at the provided
+                email below and we will get back to you at our earliest convenience: <br>
+                <u>digiscraphelpline@gmail.com</u>
+            </p>
         </div>
         <div id="CScrap" class="tabcontent">
             <h3><u>Create Scrapbook</u></h3>
@@ -244,10 +328,6 @@
                                     if(el.value)
                                     {
                                         formData.append(el.name, el.value);
-                                    }
-                                    else
-                                    {
-                                        alert("Please have a correct username or scrapbook name");
                                     }
                                 });
                             });

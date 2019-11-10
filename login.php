@@ -39,16 +39,16 @@
                     case "Log in":
                         $query = "SELECT * FROM Users WHERE " .
                         "Username='" . $_POST['user'] . "' " .
-                        "AND Pass='" . $_POST['pass'] . "'";
+                        "AND Pass='" . $_POST['pass'] . "';";
                         $result = mysqli_query($db, $query);
-                        mysqli_close($db);
                         if( mysqli_num_rows($result) > 0 )
                         {
                             $_SESSION['username'] = $_POST['user'];
-                            $result = mysqli_query( "SELECT scrapbook FROM ". $_POST['user'] );
-                            if( mysqli_num_rows( $result ) > 0 )
+                            $query2 = "SELECT scrapbook FROM " . $_POST['user'];
+                            $result2 = mysqli_query($db, $query2);
+                            if( mysqli_num_rows($result2) > 0 )
                             {
-                                $row = mysqli_fetch_array($result);
+                                $row = mysqli_fetch_array($result2);
                                 $_SESSION['scrapbook'] = $row['scrapbook'];
                             }
                             header("Location: home.php");
@@ -87,7 +87,7 @@
                     switch( $_POST["submit"] )
                     {
                         case "Log in":
-                            print "Invalid username or passowrd";
+                            print "Invalid username or password";
                             break;
                         case "Register":
                             print "Username already exists";
