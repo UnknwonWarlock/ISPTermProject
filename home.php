@@ -135,7 +135,8 @@
             <li><button onclick="openTab(event, 'AEScrap')" class="tablinks">Add to Scrapbook</button></li>
             <li><button onclick="openTab(event, 'DEScrap')" class="tablinks">Delete from Scrapbook</button></li>
             <li><button onclick="openTab(event, 'CScrap')" class="tablinks">Create Scrapbook</button></li>
-            <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>       
+            <li><button onclick="openTab(event, 'DScrap')" class="tablinks">Delete Scrapbook</button></li>
+            <li><button><a href="display.php">Display Scrapbook</a></button></li>     
         </ul>
         <div id="scrapSelect" class="tabcontent">
             <h3><u>Select Current Scrapbook</u></h3>
@@ -385,6 +386,7 @@
             </form>
         </div>
         <script>
+            document.getElementsByClassName('tablinks')[2].click()
             function openTab(evt, tabName) {
                 // Declare all variables
                 var i, tabcontent, tablinks;
