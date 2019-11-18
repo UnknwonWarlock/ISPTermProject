@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>DigiScrap: Digital Scrap Booking</title>
+        <title>DigiScrap: Login</title>
         <link rel="stylesheet" type="text/css" href="assets/styles/homeStyle.css">
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
     </head>
