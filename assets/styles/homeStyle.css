@@ -14,8 +14,7 @@ header{
 body{
     margin:0;
     padding:0;
-    background-color: navajowhite;
-    background-image: linear-gradient(to right, rgba(255, 235, 204, 1), navajowhite);
+    background-color: #fbf3d4;
 }
 
 .home:hover, .home:link, .home:active{
