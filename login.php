@@ -81,7 +81,7 @@
             <form class="login" action="login.php" method="POST"> 
                 Please enter your username and password!<br>
                 <input type="text" name="user" id="textbox" placeholder="Username" required><br>
-                <input type="password" name="pass" id="textbox" placeholder="Password" required><br>
+                <input type="password" name="pass" id="textbox" placeholder="Password" required><br><br>
                 <?php
                     if( isset( $_POST["submit"] ) )
                     {
@@ -97,7 +97,7 @@
                         print '</span><br>';
                     }
                 ?>
-                <input type="submit" name="submit" id="button" value="Log in"><input type="submit" name="submit" id="button" value="Register">
+                <input type="submit" name="submit" id="button" value="Log in" style="border: 1px dashed black;"><input type="submit" name="submit" id="button" value="Register" style="border: 1px dashed black;">
             </form>
         </div>
         <div id="About" class="tabcontent" style="width: 50%;">

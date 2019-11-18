@@ -13,7 +13,8 @@ header{
 body{
     margin:0;
     padding:0;
-    background-color:rgba(241, 213, 172, 0.88);
+    background-image: linear-gradient(to right, rgba(255, 235, 204, 1), navajowhite);
+    background-color: rgba(255, 235, 204, 1);
 }
 
 .home:hover, .home:link, .home:active{
@@ -50,7 +51,8 @@ li button{
     border: transparent;
     background-color: navajowhite;
 	text-decoration: none;
-	color: black;
+    color: black;
+    cursor: pointer;
 }
 
 
@@ -71,13 +73,14 @@ li button:hover:not(.active){
 
 #button2{
     border-radius: 25px;
-    border: 2px dashed black;
+    border: 1px dashed black;
     width: 12%;
-    height: 25px;   
+    height: 25px; 
+    cursor: pointer;  
 }
 #textbox{
     border-radius: 25px;
-    border: 2px dashed black;
+    border: 1px dashed black;
     width: 20%;
     height: 25px;
     padding: 0 .25rem;

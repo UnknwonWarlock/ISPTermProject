@@ -14,7 +14,8 @@ header{
 body{
     margin:0;
     padding:0;
-    background-color:rgba(241, 213, 172, 0.88);
+    background-color: navajowhite;
+    background-image: linear-gradient(to right, rgba(255, 235, 204, 1), navajowhite);
 }
 
 .home:hover, .home:link, .home:active{
@@ -59,7 +60,7 @@ li a:hover:not(.active){
 
 #textbox{
     border-radius: 25px;
-    border: 2px dashed black;
+    border: 1px dashed black;
     width: 20%;
     height: 25px;
     padding: 0 .25rem;
@@ -68,5 +69,6 @@ li a:hover:not(.active){
     border-radius: 25px;
     border: 2px dashed black;
     width: 10%;
-    height: 25px;   
+    height: 25px; 
+    cursor: pointer;  
 }
