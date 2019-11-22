@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="assets/js/generateScrap.js" type="text/javascript"></script>
         <title>DigiScrap: Display</title>
+        <script src="assets/js/create.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
     </head>
-    <body style="background: #fbf3d4;">
+    <body>
+        <header><a class="home" href="login.php">DigiScrap</a>: A Place for Scrap Bookers!</header>
+        <ul>
+            <li><button><a href="login.php">Logout</a></button></li>
+            <li><button><a href="home.php">Home</a></button></li>
+            <li><button onclick="openTab(event, 'About')" class="tablinks">About</button></li>
+            <li><button onclick="openTab(event, 'Help')" class="tablinks">Help</button></li>
+        </ul>        
         <canvas id="test">
 
         </canvas>
         <script>
-            test(window.innerWidth, window.innerHeight, "blue", "white", "black");
         </script>
     </body>
 </html>

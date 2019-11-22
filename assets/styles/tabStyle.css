@@ -8,6 +8,7 @@ header{
     border-top: inset rgb(155, 116, 116) 5px;
     color: white;
     height: 50px;
+    width: 100%;
 }
 
 body{
@@ -30,9 +31,10 @@ body{
 ul{
 	list-style-type:none;
 	margin: 0;
-	padding: 0;
+	padding: 0px 15px 0px 0px;
 	overflow: hidden;
     background:navajowhite;
+    width: 100%;
 }
 
 li{

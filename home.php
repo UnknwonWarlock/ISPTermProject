@@ -1,125 +1,124 @@
-<?php
-    session_start();
-
-    $MySQL_db = "db1.cs.uakron.edu:3306"; 
-    $MySQL_username = "mcr66";
-    $MySQL_password = "ohl5eiB0";
-
-    $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
-    if(!$db) {
-
-        print "Error - Could not connect to MySQL";
-        exit;
-    }
-
-    // Select schema from database
-    $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
-    if (!$error) {
-
-        print "Error - Could not select the database";
-        exit;
-    }
-
-    if($_POST['submit'] == "Select Scrapbook!")
-    {
-        $_SESSION["scrapbook"] = $_POST['scrapbook'];
-    }
-    
-    else if($_POST["submit"] == "Create Scrapbook!")
-    {
-        $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
-        trim($query);
-        $result = mysqli_query($db, $query);
-        if(mysqli_num_rows($result) == 0)
-        {
-
-            $settings = $_POST['backColor'] . "/" . $_POST['captColor'] . "/" . $_POST['bordType'] . "/" . $_POST['bordColor'];
-            $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
-            trim($query2);
-            mysqli_query($db,$query2);
-
-            $query3 = "CREATE TABLE " . $_SESSION['username'] . "_" . $_POST['scrapbook'] 
-                . "(title TEXT, " .
-                  "image_name TEXT, " .
-                  "image_path TEXT, " .
-                  "caption TEXT);";
-            trim($query3);
-            mysqli_query($db, $query3);
-
-            $query4 = "SELECT scrapbook FROM ". $_SESSION['username'];
-            $result2 = mysqli_query($db, $query4);
-            if( mysqli_num_rows($result2) > 0 )
-            {
-                $row = mysqli_fetch_array($result2);
-                $_SESSION['scrapbook'] = $row['scrapbook'];
-            }
-        }
-    }
-    elseif($_POST["submit"] == "Delete Scrapbook!")
-    {
-        $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
-        trim($query);
-        $result = mysqli_query($db, $query);
-        if(mysqli_num_rows($result) > 0)
-        {
-            $query2 = 'DELETE FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
-            trim($query2);
-            mysqli_query($db,$query2);
-
-            $query4 = 'SELECT image_path FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ';';
-            trim($query4);
-            $result2 = mysqli_query($db, $query4);
-            while($row = mysqli_fetch_array($result2))
-            {
-                if(file_exists(realpath(getcwd() . $row["image_path"])))
-                {
-                    unlink(realpath(getcwd() . $row["image_path"]));
-                }
-            }
-
-            $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
-            mysqli_query($db,$query3);
-            unset($_SESSION['scrapbook']);
-        }
-    }
-    else if($_POST["submit"] == "Delete Picture!")
-    {
-        $query = 'SELECT image_path FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ' WHERE title="' . $_POST["title"] . '";';
-        trim($query);
-        $result = mysqli_query($db, $query);
-        $row = mysqli_fetch_array($result);
-        if(file_exists(realpath(getcwd() . $row["image_path"])))
-        {
-            unlink(realpath(getcwd() . $row["image_path"]));
-            $query = 'DELETE FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ' WHERE title="' . $_POST["title"] . '"';
-            trim($query);
-            mysqli_query($db, $query);
-        }
-    }
-    
-    $scrapbooks = "";
-    $result = mysqli_query($db, 'SELECT scrapbook FROM ' . $_SESSION["username"]);
-    while($row = mysqli_fetch_array($result)){
-        $scrapbooks .= "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
-    }
-
-    $query = 'SELECT title FROM ' . $_SESSION["username"] . '_' . $_SESSION["scrapbook"];
-    $result2 = mysqli_query( $db, $query);
-    if( mysqli_num_rows($result2) > 0 ){
-        while($row2 = mysqli_fetch_array($result2)){
-            $imageTitles .= "<option value='" . $row2['title'] . "'>" . $row2['title'] . "</option>";
-        }
-    }
-?>
-
 <!DOCTYPE html>
 <html>
+    <?php
+        session_start();
+
+        $MySQL_db = "db1.cs.uakron.edu:3306"; 
+        $MySQL_username = "mcr66";
+        $MySQL_password = "ohl5eiB0";
+
+        $db = mysqli_connect($MySQL_db, $MySQL_username, $MySQL_password);
+        if(!$db) {
+
+            print "Error - Could not connect to MySQL";
+            exit;
+        }
+
+        // Select schema from database
+        $error = mysqli_select_db($db, "ISP_" . $MySQL_username);
+        if (!$error) {
+
+            print "Error - Could not select the database";
+            exit;
+        }
+
+        if($_POST['submit'] == "Select Scrapbook!")
+        {
+            $_SESSION["scrapbook"] = $_POST['scrapbook'];
+        }
+        
+        else if($_POST["submit"] == "Create Scrapbook!")
+        {
+            $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
+            trim($query);
+            $result = mysqli_query($db, $query);
+            if(mysqli_num_rows($result) == 0)
+            {
+
+                $settings = $_POST['backColor'] . "/" . $_POST['captColor'] . "/" . $_POST['bordType'] . "/" . $_POST['bordColor'];
+                $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
+                trim($query2);
+                mysqli_query($db,$query2);
+
+                $query3 = "CREATE TABLE " . $_SESSION['username'] . "_" . $_POST['scrapbook'] 
+                    . "(title TEXT, " .
+                    "image_name TEXT, " .
+                    "image_path TEXT, " .
+                    "caption TEXT);";
+                trim($query3);
+                mysqli_query($db, $query3);
+
+                $query4 = "SELECT scrapbook FROM ". $_SESSION['username'];
+                $result2 = mysqli_query($db, $query4);
+                if( mysqli_num_rows($result2) > 0 )
+                {
+                    $row = mysqli_fetch_array($result2);
+                    $_SESSION['scrapbook'] = $row['scrapbook'];
+                }
+            }
+        }
+        elseif($_POST["submit"] == "Delete Scrapbook!")
+        {
+            $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
+            trim($query);
+            $result = mysqli_query($db, $query);
+            if(mysqli_num_rows($result) > 0)
+            {
+                $query2 = 'DELETE FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
+                trim($query2);
+                mysqli_query($db,$query2);
+
+                $query4 = 'SELECT image_path FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ';';
+                trim($query4);
+                $result2 = mysqli_query($db, $query4);
+                while($row = mysqli_fetch_array($result2))
+                {
+                    if(file_exists(realpath(getcwd() . $row["image_path"])))
+                    {
+                        unlink(realpath(getcwd() . $row["image_path"]));
+                    }
+                }
+
+                $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
+                mysqli_query($db,$query3);
+                unset($_SESSION['scrapbook']);
+            }
+        }
+        else if($_POST["submit"] == "Delete Picture!")
+        {
+            $query = 'SELECT image_path FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ' WHERE title="' . $_POST["title"] . '";';
+            trim($query);
+            $result = mysqli_query($db, $query);
+            $row = mysqli_fetch_array($result);
+            if(file_exists(realpath(getcwd() . $row["image_path"])))
+            {
+                unlink(realpath(getcwd() . $row["image_path"]));
+                $query = 'DELETE FROM ' . $_SESSION["username"] . "_" . $_SESSION["scrapbook"] . ' WHERE title="' . $_POST["title"] . '"';
+                trim($query);
+                mysqli_query($db, $query);
+            }
+        }
+        
+        $scrapbooks = "";
+        $result = mysqli_query($db, 'SELECT scrapbook FROM ' . $_SESSION["username"]);
+        while($row = mysqli_fetch_array($result)){
+            $scrapbooks .= "<option value='" . $row['scrapbook'] . "'>" . $row['scrapbook'] . "</option>";
+        }
+
+        $query = 'SELECT title FROM ' . $_SESSION["username"] . '_' . $_SESSION["scrapbook"];
+        $result2 = mysqli_query( $db, $query);
+        if( mysqli_num_rows($result2) > 0 ){
+            while($row2 = mysqli_fetch_array($result2)){
+                $imageTitles .= "<option value='" . $row2['title'] . "'>" . $row2['title'] . "</option>";
+            }
+        }
+    ?>
+
     <head>
         <title>DigiScrap: Digital Scrap Booking</title>
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles/baseStyle.css">
-        <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
         <link rel="stylesheet" type="text/css" href="assets/dist/dropzone.css">
         <script src="assets/js/dropzone.js"></script>
     </head>
