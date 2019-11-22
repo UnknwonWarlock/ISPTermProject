@@ -7,7 +7,7 @@ function set( width, height )
     document.getElementById("test").height = height;
 }
 
-function create(){
+function create(type){
     var canvas = document.getElementById("test");
     var ctx = canvas.getContext("2d");
 
@@ -74,13 +74,27 @@ function create(){
         ctx.fill();
     }
 
-    ctx.font = "20px Arial";
-    ctx.fillStyle = t;
-    ctx.textAlign = "center";
-    ctx.fillText( "My First Scrap Book!", x/2 + x/4 - startWidth, y/6 );
-    const img = new Image( x/3, y/2 );
-    img.onload = loadImg;
-    img.src = "blep.jpg";
+    if(type === "test")
+    {
+        ctx.font = "15px Arial";
+        ctx.fillStyle = t;
+        ctx.textAlign = "center";
+        ctx.fillText( "My First Scrap Book!", x/2 + x/4 - startWidth, y/6 );
+        const img = new Image( x/3, y/2 );
+        img.onload = loadImg;
+        img.src = "assets/imgs/stock_test.jpg";
+        ctx.fillText("Caption!", x/2 + x/4 - startWidth, y*5/6);
+    }
+    else
+    {
+        ctx.font = "20px Arial";
+        ctx.fillStyle = t;
+        ctx.textAlign = "center";
+        ctx.fillText( "My First Scrap Book!", x/2 + x/4 - startWidth, y/6 );
+        const img = new Image( x/3, y/2 );
+        img.onload = loadImg;
+        img.src = "blep.jpg";
+    }
 }
 
 function validateC(toValid){

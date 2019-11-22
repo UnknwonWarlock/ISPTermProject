@@ -79,7 +79,7 @@ li button:hover:not(.active){
     height: 25px; 
     cursor: pointer;  
 }
-#textbox{
+.textbox{
     border-radius: 25px;
     border: 1px dashed black;
     width: 20%;

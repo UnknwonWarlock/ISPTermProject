@@ -121,6 +121,7 @@
         <link rel="stylesheet" type="text/css" href="assets/styles/baseStyle.css">
         <link rel="stylesheet" type="text/css" href="assets/dist/dropzone.css">
         <script src="assets/js/dropzone.js"></script>
+        <script src="assets/js/create.js"></script>
     </head>
     <body>
         <header>
@@ -228,20 +229,35 @@
                 <div class="gridWrapper">
                     <div class="column">
                         Scrapbook Name: <br>
-                        <input type="text" id="textbox" style="width: 40%;" name="scrapbook" placeholder="scrapbook name" required><br><br>
+                        <input type="text" id="textbox" class="textbox" style="width: 40%;" name="scrapbook" placeholder="scrapbook name" required><br><br>
                         <input type="submit" id="button2" style="width: 40%;" name="submit" value="Create Scrapbook!">
                     </div>
                     <div class="column">
-                        Scrapbook Background Color: <br>
-                        <input type="text" id="textbox" name="backColor" value="rosybrown" required><br>
-                        Scrapbook Caption Color:<br>
-                        <input type="text" id="textbox" name="captColor" value="lightyellow" required><br>
+                        Scrapbook Cover Color: <br>
+                        <input type="text" id="cover" class="textbox" name="backColor" value="pink" onchange="create('test')" required><br>
+                        Scrapbook Paper Color:<br>
+                        <input type="text" id="paper" class="textbox" name="captColor" value="gray" onchange="create('test')" required><br>
                     </div>
                     <div class="column">
-                        Border Type:<br>
-                        <input type="text" id="textbox" name="bordType" value="dashed" required><br>
-                        Border Color:<br>
-                        <input type="text" id="textbox" name="bordColor" value="black" required><br><br>
+                        Ring Color:<br>
+                        <input type="text" id="rings" class="textbox" name="bordType" value="black" onchange="create('test')" required><br>
+                        Text Color:<br>
+                        <input type="text" id="textColor" class="textbox" name="bordColor" value="black" onchange="create('test')" required><br><br>
+                    </div>
+                    <div class="column">
+                    </div>
+                </div>
+                <div class="gridWrapper">
+                    <div class="column">
+                    </div>
+                    <div class="column">
+                        <canvas id="test"></canvas>
+                        <script>
+                            set(600, 300);
+                            create("test");
+                        </script>
+                    </div>
+                    <div class="column">
                     </div>
                 </div>
             </form>
@@ -366,7 +382,7 @@
             <h3><u>Delete Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <input name="scrapbook" id="textbox" value="<?php echo $_SESSION['scrapbook']; ?>" readonly><br><br>
+                <input name="scrapbook" id="textbox" class="textbox" value="<?php echo $_SESSION['scrapbook']; ?>" readonly><br><br>
                 <input type="submit" id="button2" name="submit" value="Delete Scrapbook!">
             </form>
         </div>
@@ -374,9 +390,9 @@
             <h3><u>Delete from Existing Scrapbook</u></h3>
             <form method="POST" action="home.php">
                 Scrapbook Name: <br>
-                <input name="scrapbook" id="textbox" value="<?php echo $_SESSION['scrapbook']; ?>" readonly><br>
+                <input name="scrapbook" id="textbox" class="textbox" value="<?php echo $_SESSION['scrapbook']; ?>" readonly><br>
                 Picture Title:<br>
-                <select name="title" id="textbox">
+                <select name="title" id="textbox" class="textbox">
                 <?php
                     echo $imageTitles;
                 ?>
