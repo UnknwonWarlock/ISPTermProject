@@ -296,11 +296,13 @@
                         var check = testWords(canv, words, type);
                         if(check === false && type === "cap")
                         {
-                            prompt("Too many words in Caption!");   
+                            alert("Too many words in Caption!");
+                            document.forms['captionForm'].reset();  
                         }
-                        else if(check === false && type === "titles")
+                        else if(check === false && type === "title")
                         {
-                            prompt("Too many words in Title");
+                            alert("Too many words in Title");
+                            document.forms['my-awesome-dropzone'].reset();
                         }
                     }
 
