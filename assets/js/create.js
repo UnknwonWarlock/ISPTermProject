@@ -1,24 +1,24 @@
 var x, y;
-function set( width, height )
+function set( width, height, canv )
 {
     x = width;
     y = height;
-    document.getElementById("test").width = width;
-    document.getElementById("test").height = height;
+    document.getElementById(canv).width = width;
+    document.getElementById(canv).height = height;
 }
 
-function create(type){
-    var canvas = document.getElementById("test");
+function create( canv, cover, paper, rings, text ){
+    var canvas = document.getElementById(canv);
     var ctx = canvas.getContext("2d");
 
     var c = new Option().style.color;
-    c = document.getElementById("cover").value;
+    c = document.getElementById(cover).value;
     var p = new Option().style.color;
-    p = document.getElementById("paper").value;
+    p = document.getElementById(paper).value;
     var r = new Option().style.color;
-    r = document.getElementById("rings").value;
+    r = document.getElementById(rings).value;
     var t = new Option().style.color;
-    t = document.getElementById("textColor").value;
+    t = document.getElementById(text).value;
 
     // outline color, cover color
     ctx.strokeStyle = "rgba(1, 1, 1, 0)"; 
@@ -44,9 +44,9 @@ function create(type){
     // draws the pages
     ctx.fillStyle = p;
     // Both Pages
-    // ctx.fillRect( secWidth, secWidth, x - 2 *(secWidth), y - 2 *(secWidth) );
+    ctx.fillRect( secWidth, secWidth, x - 2 *(secWidth), y - 2 *(secWidth) );
     // Right page only
-    ctx.fillRect( x/2, secWidth, ( x/2 ) - secWidth , y - 2 *(secWidth) );
+    // ctx.fillRect( x/2, secWidth, ( x/2 ) - secWidth , y - 2 *(secWidth) );
     // Left page only
     // ctx.fillRect( secWidth, secWidth, x/2 - secWidth, y - 2 *(secWidth) );
 
@@ -74,45 +74,90 @@ function create(type){
         ctx.fill();
     }
 
-    if(type === "test")
-    {
-        ctx.font = "15px Arial";
-        ctx.fillStyle = t;
-        ctx.textAlign = "center";
-        ctx.fillText( "My First Scrap Book!", x/2 + x/4 - startWidth, y/6 );
-        const img = new Image( x/3, y/2 );
-        img.onload = loadImg;
-        img.src = "assets/imgs/stock_test.jpg";
-        ctx.fillText("Caption!", x/2 + x/4 - startWidth, y*5/6);
+    ctx.font = "20px Arial";
+    ctx.fillStyle = t;
+    ctx.textAlign = "center";
+    var leftCenter = x/4 + startWidth;
+    var rightCenter = x/2 + x/4 - startWidth;
+    var pageWidth = x/2 - 2 * secWidth;
+    // max title new lines = 2; height = y/8; txt = 30px
+    // max caption new lines = 7; height = y - y/4; txt = 20px
+    var test = "llow, this is a ihasdnio a9j0sd asiojdasio jioasdjio oji asdji jiojgod sfhio sad ioasf hioeafo nfoidstest of characters nieeasdj jasd asjdas  jasdn asjd asdj asjd asdk jasd jasd m0pf jasdop asjopd joaspd jaopsd joasd jopsad jopasd jopasjd asjassaasdjasjasdjas jasdk asjd kasdj asdsaj kasdjasdk adk sadk asj kj ald jjassdj  j ajdjj jasdk kkasdj asdj asjda s, asdjs djw dj aj asdja dsajd sajkd asdkjsa djf sakdsa fjs dsakjfsa djasd asj as d jsadsandjsad as  adas lease ignore thsi tecxt mmmmmmmmm, yes"
+    writeText( ctx, y - y/4, leftCenter, test, pageWidth, 20 );
+    loadImg( ctx, "canvas.png", leftCenter );
+}
+
+function parse( ctx, words, pageWidth, type){
+    var lines = [];
+    var sentence = "";
+    for( var i = 0; i < words.length; ){
+        var curWord = "";
+        for(; words.charAt(i) == ' ' && i < words.length; ++i );
+        for(; words.charAt(i) != ' ' && i < words.length; ++i )
+            curWord += words.charAt(i);
+        if( ctx.measureText( sentence + " " + curWord ).width < pageWidth ){
+            if( sentence.length == 0 )
+                sentence += curWord;
+            else
+                sentence += " " + curWord;
+        }
+        else{
+            lines.push( sentence );
+            sentence = curWord;
+        }
     }
-    else
-    {
-        ctx.font = "20px Arial";
-        ctx.fillStyle = t;
-        ctx.textAlign = "center";
-        ctx.fillText( "My First Scrap Book!", x/2 + x/4 - startWidth, y/6 );
-        const img = new Image( x/3, y/2 );
-        img.onload = loadImg;
-        img.src = "blep.jpg";
+    lines.push( sentence );
+    switch( type ){
+        case "test":
+            return lines.length;
+        default:
+            return lines;
     }
 }
 
-function validateC(toValid){
+function testWords( canv, words, type){
+    var canvas = document.getElementById(canv);
+    var ctx = canvas.getContext("2d");
+    var input = document.getElementById( words );
+    var limit;
+    switch( type ){
+        case "title":
+            limit = 2;
+            ctx.font = "30px Arial";
+            break;
+        case "cap":
+            limit = 6;
+            ctx.font = "20px Arial";
+            break;            
+    }
+    if( parse( ctx, input, 612.5, "test") > limit ){
+        return false;
+    }
+    return true;
+}
+
+function writeText( ctx, startH, side, words, pageWidth, height ){
+    var lines = parse( ctx, words, pageWidth, "" );
+    for( var i = 0; i < lines.length; ++i, startH += height ){
+        ctx.fillText( lines[i], side, startH );
+    }
+}
+
+function loadImg( ctx, pic, side ){
+    const img = new Image( x/3, y/2 );
+    img.src = pic;
+    img.onload = ctx.drawImage( img, side - x/6, y/5, x/3, y/2 );
+}
+
+function validateC(toValid, canv, cover, paper, rings, text){
     var s = new Option().style;
     s.color = document.getElementById(toValid).value;
     if( !( s.color == document.getElementById(toValid).value.toLowerCase() ) || document.getElementById(toValid).value === ""  )
         document.getElementById(toValid).style = "border: 1px solid red;";
     else{
         document.getElementById(toValid).style = "border: 1px solid black";
-        create();
+        create( canv, cover, paper, rings, text );
     }
-}
-
-function loadImg(){
-    var canvas = document.getElementById("test");
-    var ctx = canvas.getContext('2d');
-
-    ctx.drawImage( this, x/2 + x/12, y/4, this.width, this.height );
 }
 
 /*
