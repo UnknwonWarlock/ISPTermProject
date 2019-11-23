@@ -277,18 +277,33 @@
                     WARNING: the action must not be changed
                 -->
                 <form action="processAdd.php" class="dropzone" id="my-awesome-dropzone" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="title" placeholder="Enter a Title!" id="picTitle" required>
+                    <input type="text" name="title" placeholder="Enter a Title!" id="picTitle" onkeyup="words('secret', 'picTitle', 'title')" required>
                 </form>
                 <form id="captionForm" method="POST" style="border: none" enctype="multipart/form-data">
-                    <textarea cols="280" type="text" name="caption" id="picCaption">Enter a Caption!</textarea><br><br>
+                    <textarea cols="280" type="text" name="caption" id="picCaption" onkeyup="words('secret', 'picCaption', 'cap')">Enter a Caption!</textarea><br><br>
                     <input type="button" name="submit" value="Add" class="submit" id="button">
                 </form>
+                <canvas id="secret"></canvas>
                 <!--
                     This script allows me to change some of base options for the drag and drop form
                     such as one file at a time and remove and replace the old file with a new one, a diffent initial display message
                     and the size of the picture (have to override the dropzone.css too)
                 -->
                 <script>
+                    set(1,1, "secret");
+                    function words(canv, words, type)
+                    {
+                        var check testWords(canv, words, type);
+                        if(check === false && type === "cap")
+                        {
+                            prompt("Too many words in Caption!");   
+                        }
+                        else if(check === false && type === "titles")
+                        {
+                            prompt("Too many words in Title");
+                        }
+                    }
+
                     document.getElementById("button").style.cursor = "pointer";
 
                     Dropzone.options.myAwesomeDropzone = {
