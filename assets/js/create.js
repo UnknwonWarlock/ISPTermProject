@@ -74,7 +74,7 @@ function create( canv, cover, paper, rings, text ){
         ctx.fill();
     }
 
-    ctx.font = "20px Arial";
+    ctx.font = "30px Arial";
     ctx.fillStyle = t;
     ctx.textAlign = "center";
     var leftCenter = x/4 + startWidth;
@@ -82,9 +82,9 @@ function create( canv, cover, paper, rings, text ){
     var pageWidth = x/2 - 2 * secWidth;
     // max title new lines = 2; height = y/8; txt = 30px
     // max caption new lines = 7; height = y - y/4; txt = 20px
-    var test = "llow, this is a ihasdnio a9j0sd asiojdasio jioasdjio oji asdji jiojgod sfhio sad ioasf hioeafo nfoidstest of characters nieeasdj jasd asjdas  jasdn asjd asdj asjd asdk jasd jasd m0pf jasdop asjopd joaspd jaopsd joasd jopsad jopasd jopasjd asjassaasdjasjasdjas jasdk asjd kasdj asdsaj kasdjasdk adk sadk asj kj ald jjassdj  j ajdjj jasdk kkasdj asdj asjda s, asdjs djw dj aj asdja dsajd sajkd asdkjsa djf sakdsa fjs dsakjfsa djasd asj as d jsadsandjsad as  adas lease ignore thsi tecxt mmmmmmmmm, yes"
-    writeText( ctx, y - y/4, leftCenter, test, pageWidth, 20 );
-    loadImg( ctx, "canvas.png", leftCenter );
+    // var test = "llow, this is a ihasdnio a9j0sd asiojdasio jioasdjio oji asdji jiojgod sfhio sad ioasf hioeafo nfoidstest of characters nieeasdj jasd asjdas  jasdn asjd asdj asjd asdk jasd jasd m0pf jasdop asjopd joaspd jaopsd joasd jopsad jopasd jopasjd asjassaasdjasjasdjas jasdk asjd kasdj asdsaj kasdjasdk adk sadk asj kj ald jjassdj  j ajdjj jasdk kkasdj asdj asjda s, asdjs djw dj aj asdja dsajd sajkd asdkjsa djf sakdsa fjs dsakjfsa djasd asj as d jsadsandjsad as  adas lease ignore thsi tecxt mmmmmmmmm, yes"
+    writeText( ctx, y/8, leftCenter, "Heljad asjdj asdj j jasjd jsadj jasdj jasdj asjd jasjd jasd jasdj asdj sadj asjd sajd sjad jasd jasdj asdj sj j djsajd sajd jsd jsad jsdk ksdjajd slo", pageWidth, 30 );
+    // loadImg( ctx, "canvas.png", leftCenter );
 }
 
 function parse( ctx, words, pageWidth, type){
@@ -107,18 +107,19 @@ function parse( ctx, words, pageWidth, type){
         }
     }
     lines.push( sentence );
-    switch( type ){
-        case "test":
-            return lines.length;
-        default:
-            return lines;
-    }
+    return lines;
+    // switch( type ){
+    //     case "test":
+    //         return lines.length;
+    //     default:
+    //         return lines;
+    // }
 }
 
 function testWords( canv, words, type){
     var canvas = document.getElementById(canv);
     var ctx = canvas.getContext("2d");
-    var input = document.getElementById( words );
+    var input = document.getElementById( words ).value;
     var limit;
     switch( type ){
         case "title":
@@ -130,14 +131,17 @@ function testWords( canv, words, type){
             ctx.font = "20px Arial";
             break;            
     }
-    if( parse( ctx, input, 612.5, "test") > limit ){
+    var lines = parse( ctx, input, 612.5, "test"); 
+    if( lines.length > limit ){
         return false;
     }
     return true;
+    
 }
 
 function writeText( ctx, startH, side, words, pageWidth, height ){
     var lines = parse( ctx, words, pageWidth, "" );
+    window.alert( lines.length );
     for( var i = 0; i < lines.length; ++i, startH += height ){
         ctx.fillText( lines[i], side, startH );
     }
