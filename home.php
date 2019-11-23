@@ -234,15 +234,15 @@
                     </div>
                     <div class="column">
                         Scrapbook Cover Color: <br>
-                        <input type="text" id="cover" class="textbox" name="backColor" value="pink" onchange="create('test')" required><br>
+                        <input type="text" id="cover" class="textbox" name="backColor" value="pink" onkeyup="validateC('cover', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br>
                         Scrapbook Paper Color:<br>
-                        <input type="text" id="paper" class="textbox" name="captColor" value="gray" onchange="create('test')" required><br>
+                        <input type="text" id="paper" class="textbox" name="captColor" value="lightyellow" onkeyup="validateC('paper', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br>
                     </div>
                     <div class="column">
                         Ring Color:<br>
-                        <input type="text" id="rings" class="textbox" name="bordType" value="black" onchange="create('test')" required><br>
+                        <input type="text" id="rings" class="textbox" name="bordType" value="black" onkeyup="validateC('rings', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br>
                         Text Color:<br>
-                        <input type="text" id="textColor" class="textbox" name="bordColor" value="black" onchange="create('test')" required><br><br>
+                        <input type="text" id="textColor" class="textbox" name="bordColor" value="black" onkeyup="validateC('textColor', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br><br>
                     </div>
                     <div class="column">
                     </div>
@@ -253,8 +253,8 @@
                     <div class="column">
                         <canvas id="test"></canvas>
                         <script>
-                            set(600, 300);
-                            create("test");
+                            set(600, 300, "test");
+                            create("test", "cover", "paper", "rings", "textColor");
                         </script>
                     </div>
                     <div class="column">
