@@ -26,7 +26,6 @@
         {
             $_SESSION["scrapbook"] = $_POST['scrapbook'];
         }
-        
         else if($_POST["submit"] == "Create Scrapbook!")
         {
             $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
@@ -82,6 +81,14 @@
                 $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
                 mysqli_query($db,$query3);
                 unset($_SESSION['scrapbook']);
+
+                $query4 = "SELECT scrapbook FROM ". $_SESSION['username'];
+                $result2 = mysqli_query($db, $query4);
+                if( mysqli_num_rows($result2) > 0 )
+                {
+                    $row = mysqli_fetch_array($result2);
+                    $_SESSION['scrapbook'] = $row['scrapbook'];
+                }
             }
         }
         else if($_POST["submit"] == "Delete Picture!")
@@ -297,12 +304,10 @@
                         if(check === false && type === "cap")
                         {
                             alert("Too many words in Caption!");
-                            document.forms['captionForm'].reset();  
                         }
                         else if(check === false && type === "title")
                         {
                             alert("Too many words in Title");
-                            document.forms['my-awesome-dropzone'].reset();
                         }
                     }
 
