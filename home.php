@@ -293,7 +293,7 @@
                     set(1,1, "secret");
                     function words(canv, words, type)
                     {
-                        var check testWords(canv, words, type);
+                        var check = testWords(canv, words, type);
                         if(check === false && type === "cap")
                         {
                             prompt("Too many words in Caption!");   
