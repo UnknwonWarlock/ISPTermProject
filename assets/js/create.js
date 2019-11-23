@@ -83,7 +83,7 @@ function create( canv, cover, paper, rings, text ){
     // max title new lines = 2; height = y/8; txt = 30px
     // max caption new lines = 7; height = y - y/4; txt = 20px
     // var test = "llow, this is a ihasdnio a9j0sd asiojdasio jioasdjio oji asdji jiojgod sfhio sad ioasf hioeafo nfoidstest of characters nieeasdj jasd asjdas  jasdn asjd asdj asjd asdk jasd jasd m0pf jasdop asjopd joaspd jaopsd joasd jopsad jopasd jopasjd asjassaasdjasjasdjas jasdk asjd kasdj asdsaj kasdjasdk adk sadk asj kj ald jjassdj  j ajdjj jasdk kkasdj asdj asjda s, asdjs djw dj aj asdja dsajd sajkd asdkjsa djf sakdsa fjs dsakjfsa djasd asj as d jsadsandjsad as  adas lease ignore thsi tecxt mmmmmmmmm, yes"
-    writeText( ctx, y/8, leftCenter, "Heljad asjdj asdj j jasjd jsadj jasdj jasdj asjd jasjd jasd jasdj asdj sadj asjd sajd sjad jasd jasdj asdj sj j djsajd sajd jsd jsad jsdk ksdjajd slo", pageWidth, 30 );
+    writeText( ctx, y/8, leftCenter, "asjda jds jaksd kk asdk  kasd kasdk asdkk askd k askd ", pageWidth, 30 );
     // loadImg( ctx, "canvas.png", leftCenter );
 }
 
@@ -107,13 +107,12 @@ function parse( ctx, words, pageWidth, type){
         }
     }
     lines.push( sentence );
-    return lines;
-    // switch( type ){
-    //     case "test":
-    //         return lines.length;
-    //     default:
-    //         return lines;
-    // }
+    switch( type ){
+        case "test":
+            return lines.length;
+        default:
+            return lines;
+    }
 }
 
 function testWords( canv, words, type){
@@ -131,17 +130,14 @@ function testWords( canv, words, type){
             ctx.font = "20px Arial";
             break;            
     }
-    var lines = parse( ctx, input, 612.5, "test"); 
-    if( lines.length > limit ){
+    if( parse( ctx, input, 612.5, "test") > limit ){
         return false;
     }
     return true;
     
 }
-
 function writeText( ctx, startH, side, words, pageWidth, height ){
     var lines = parse( ctx, words, pageWidth, "" );
-    window.alert( lines.length );
     for( var i = 0; i < lines.length; ++i, startH += height ){
         ctx.fillText( lines[i], side, startH );
     }
