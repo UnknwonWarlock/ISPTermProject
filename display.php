@@ -12,11 +12,15 @@
             <li><button><a href="home.php">Home</a></button></li>
             <li><button onclick="openTab(event, 'About')" class="tablinks">About</button></li>
             <li><button onclick="openTab(event, 'Help')" class="tablinks">Help</button></li>
-        </ul>        
-        <canvas id="test">
-
-        </canvas>
+        </ul>    
+        <input type="text" id="cover" class="textbox" name="backColor" value="green" onkeyup="validateC('cover', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br>
+        <input type="text" id="paper" class="textbox" name="captColor" value="lightyellow" onkeyup="validateC('paper', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br>
+        <input type="text" id="rings" class="textbox" name="bordType" value="black" onkeyup="validateC('rings', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br>
+        <input type="text" id="textColor" class="textbox" name="bordColor" value="black" onkeyup="validateC('textColor', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br>              
+        <canvas id="test"></canvas>
         <script>
+            set(1200, 600, "test");
+            create("test", "cover", "paper", "rings", "textColor");
         </script>
     </body>
 </html>

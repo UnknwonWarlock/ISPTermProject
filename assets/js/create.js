@@ -44,9 +44,9 @@ function create( canv, cover, paper, rings, text ){
     // draws the pages
     ctx.fillStyle = p;
     // Both Pages
-    ctx.fillRect( secWidth, secWidth, x - 2 *(secWidth), y - 2 *(secWidth) );
+    //ctx.fillRect( secWidth, secWidth, x - 2 *(secWidth), y - 2 *(secWidth) );
     // Right page only
-    // ctx.fillRect( x/2, secWidth, ( x/2 ) - secWidth , y - 2 *(secWidth) );
+    ctx.fillRect( x/2, secWidth, ( x/2 ) - secWidth , y - 2 *(secWidth) );
     // Left page only
     // ctx.fillRect( secWidth, secWidth, x/2 - secWidth, y - 2 *(secWidth) );
 
@@ -83,7 +83,7 @@ function create( canv, cover, paper, rings, text ){
     // max title new lines = 2; height = y/8; txt = 30px
     // max caption new lines = 7; height = y - y/4; txt = 20px
     // var test = "llow, this is a ihasdnio a9j0sd asiojdasio jioasdjio oji asdji jiojgod sfhio sad ioasf hioeafo nfoidstest of characters nieeasdj jasd asjdas  jasdn asjd asdj asjd asdk jasd jasd m0pf jasdop asjopd joaspd jaopsd joasd jopsad jopasd jopasjd asjassaasdjasjasdjas jasdk asjd kasdj asdsaj kasdjasdk adk sadk asj kj ald jjassdj  j ajdjj jasdk kkasdj asdj asjda s, asdjs djw dj aj asdja dsajd sajkd asdkjsa djf sakdsa fjs dsakjfsa djasd asj as d jsadsandjsad as  adas lease ignore thsi tecxt mmmmmmmmm, yes"
-    writeText( ctx, y/8, leftCenter, "asjda jds jaksd kk asdk  kasd kasdk asdkk askd k askd ", pageWidth, 30 );
+    //writeText( ctx, y/8, leftCenter, "asjda jds jaksd kk asdk  kasd kasdk asdkk askd k askd ", pageWidth, 30 );
     // loadImg( ctx, "canvas.png", leftCenter );
 }
 
@@ -153,7 +153,9 @@ function validateC(toValid, canv, cover, paper, rings, text){
     var s = new Option().style;
     s.color = document.getElementById(toValid).value;
     if( !( s.color == document.getElementById(toValid).value.toLowerCase() ) || document.getElementById(toValid).value === ""  )
+    {
         document.getElementById(toValid).style = "border: 1px solid red;";
+    }
     else{
         document.getElementById(toValid).style = "border: 1px solid black";
         create( canv, cover, paper, rings, text );
