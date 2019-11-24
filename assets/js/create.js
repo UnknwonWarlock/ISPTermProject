@@ -14,12 +14,11 @@ function setDisplay( canv, width, height, settings, picArray ){
     canvas.height = height;
     x = width;
     y = height;
-    lCenter = x/4 + fir;
-    rCenter = x/2 + x/4 - fir;
     fir = (y - y * .95)/2;
     sec = ( 2 * fir ) + ( fir / 2 );
+    lCenter = x/4 + fir;
+    rCenter = x/2 + x/4 - fir; 
     cSettings = settings;
-    alert( cSettings.scrap);
     pics = picArray;
 }
 
@@ -48,15 +47,15 @@ function handleArrows( key ){
 
 function makePage( page ){
     var pageWidth = x/2 - 2 * sec;
-    var t = new Option().style.color = cSettings.text;
-    workingCTX.fillStyle = t;
     workingCTX.textAlign = "center";
-    if( page == 0 ){ // Title Page
+    if( page == 0 ){ // Title Page    
+        var t = new Option().style.color = cSettings.text;
+        workingCTX.fillStyle = t;
         createPage( 0 );
         workingCTX.font = "60px Arial";
-        writeText( workingCTX, y/4, rightCenter, cSettings.scrap, pageWidth, 60 );
+        writeText( workingCTX, y/4, rCenter, cSettings.scrap, pageWidth, 60 );
         workingCTX.font = "30px Arial";
-        writeText( workingCTX, y - y/4, rightCenter, cSettings.user, pageWidth, 30 );
+        writeText( workingCTX, y - y/4, rCenter, cSettings.user, pageWidth, 30 );
     }
     else if( pics.length == 2 * page - 1 ){ // Left Page only
         createPage( 2 );
@@ -83,6 +82,8 @@ function loadRest( left, right, pageWidth ){
     }
     imgL.src = left.path;
 
+    var t = new Option().style.color = cSettings.text;
+    workingCTX.fillStyle = t;
     workingCTX.font = "30px Arial";
     if( right !=  0 ){
         writeText( workingCTX, y/8, rCenter, right.title, pageWidth, 30 );

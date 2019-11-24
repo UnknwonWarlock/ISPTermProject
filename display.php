@@ -63,7 +63,7 @@
             <li><button onclick="openTab(event, 'Help')" class="tablinks">Help</button></li>
         </ul>        
         <canvas id="test"></canvas>
-        <script>
+        <script type="text/javascript">
             setDisplay( "test", 
                         1400,
                         700,
@@ -74,11 +74,11 @@
                 switch (event.keyCode) {
                 case 37: // left
                     alert( "left");
-                    handleArrows( "left" );
+                    // handleArrows( "left" );
                     break;
                 case 39: // right
                     alert("right");
-                    handleArrows( "right" );
+                    // handleArrows( "right" );
                     break;
                 }
             };
