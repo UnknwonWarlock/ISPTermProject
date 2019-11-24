@@ -64,22 +64,20 @@
         </ul>        
         <canvas id="test"></canvas>
         <script>
-            var curPage = 0;
             setDisplay( "test", 
                         1400,
                         700,
                         <?php echo json_encode( $settings ) ?>,
-                        <?php echo json_encode( $pics ) ?>,
-                        "<?php echo $_SESSION['username'] ?>",
-                        "<?php echo $_SESSION['scrapbook'] ?>");
+                        <?php echo json_encode( $pics ) ?>);
             makePage(0);
             document.onkeydown = function(event) {
-                var change = false;
                 switch (event.keyCode) {
                 case 37: // left
+                    alert( "left");
                     handleArrows( "left" );
                     break;
                 case 39: // right
+                    alert("right");
                     handleArrows( "right" );
                     break;
                 }

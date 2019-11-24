@@ -19,6 +19,7 @@ function setDisplay( canv, width, height, settings, picArray ){
     fir = (y - y * .95)/2;
     sec = ( 2 * fir ) + ( fir / 2 );
     cSettings = settings;
+    alert( cSettings.scrap);
     pics = picArray;
 }
 
@@ -47,9 +48,9 @@ function handleArrows( key ){
 
 function makePage( page ){
     var pageWidth = x/2 - 2 * sec;
-    var t = new Option().style.color = cSettings.text
-    workingCTX.textAlign = "center";
+    var t = new Option().style.color = cSettings.text;
     workingCTX.fillStyle = t;
+    workingCTX.textAlign = "center";
     if( page == 0 ){ // Title Page
         createPage( 0 );
         workingCTX.font = "60px Arial";
