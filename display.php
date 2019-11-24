@@ -52,7 +52,7 @@
         <script src="assets/js/create.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
     </head>
-    <body onkeydown="handleArrows()">
+    <body>
         <header><a class="home" href="home.php">DigiScrap</a>: A Place for Scrap Bookers!</header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
@@ -63,7 +63,7 @@
         <canvas id="test" style="border: 3px solid black"></canvas>
         <script>
             setDisplay( "test", 
-                        1200,
+                        1400,
                         700,
                         <?php echo json_encode( $settings ) ?>,
                         <?php echo json_encode( $pics ) ?>,

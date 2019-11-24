@@ -1,4 +1,4 @@
-var x, y, fir, sec, cSettings, pics, canvasName, curPage = 0, user, scrap;
+var x, y, fir, sec, cSettings = [], pics, workingCTX, curPage = 0, user, scrap;
 function set( width, height, canv )
 {
     x = width;
@@ -8,8 +8,8 @@ function set( width, height, canv )
 }
 
 function setDisplay( canv, width, height, settings, picArray, userName, scrapName ){
-    canvasName = canv;
     var canvas = document.getElementById(canv);
+    workingCTX = canvas.getContext("2d");
     canvas.width = width;
     canvas.height = height;
     x = width;
@@ -48,18 +48,18 @@ function handleArrows( key ){
 }
 
 function makePage( page ){
-    var canvas = document.getElementById(canvasName);
-    var workingCTX = canvas.getContext("2d");
     var leftCenter = x/4 + fir;
     var rightCenter = x/2 + x/4 - fir;
     var pageWidth = x/2 - 2 * sec;
     if( page == 0 ){
         createPage( 0 );
-        workingCTX.fillStyle = cSettings[0].text;
+        var t = new Option().style.color = cSettings.text
+        workingCTX.textAlign = "center";
+        workingCTX.fillStyle = t;
         workingCTX.font = "30px Arial";
         writeText( workingCTX, y/8, rightCenter, scrap, pageWidth, 30 );
         workingCTX.font = "20px Arial";
-        writeText( workingCTX, y - y/4, rightCenter, userName, pageWidth, 20 );
+        writeText( workingCTX, y - y/4, rightCenter, user, pageWidth, 20 );
     }
     else if( pics.length = 2 * page - 1 ){
         createPage( 2 );
@@ -68,60 +68,52 @@ function makePage( page ){
         createPage( 1 );
     }
 
-
 }
 
 function createPage( pageNum ){
-    var workingCTX = document.getElementById(canvasName).getContext("2d");
-    var c = new Option().style.color;
-    c = cSettings.cover;
-    var p = new Option().style.color;
-    p = cSettings.paper;
-    var r = new Option().style.color;
-    r = document.cSettings.rings;
-    var t = new Option().style.color;
-    t = document.cSettings.textColor;
-
+    var c = new Option().style.color = cSettings.cover;
+    var p = new Option().style.color = cSettings.paper;
+    var r = new Option().style.color = cSettings.rings;
     workingCTX.strokeStyle = "rgba(1, 1, 1, 0)";
-    ctx.fillStyle = c;
+    workingCTX.fillStyle = c;
 
     // draws the initial cover of the book
-    ctx.fillRect( fir, fir, x - ( 2 * fir ), y - ( 2 * fir ) );
-    ctx.beginPath();
-    ctx.ellipse( x/2, fir, (x/2)*.1, fir, 0, Math.PI, 2 * Math.PI );
-    ctx.ellipse( x/2, y - fir, (x/2)*.1, fir, 0, 0, Math.PI );
-    ctx.stroke();
-    ctx.fill();
+    workingCTX.fillRect( fir, fir, x - ( 2 * fir ), y - ( 2 * fir ) );
+    workingCTX.beginPath();
+    workingCTX.ellipse( x/2, fir, (x/2)*.1, fir, 0, Math.PI, 2 * Math.PI );
+    workingCTX.ellipse( x/2, y - fir, (x/2)*.1, fir, 0, 0, Math.PI );
+    workingCTX.stroke();
+    workingCTX.fill();
 
     // Draws the interior circle/shadow that's under the pages.
-    ctx.fillStyle = c; //
-    ctx.beginPath();
-    ctx.arc( x/2, sec, fir, 0, 2 * Math.PI );
-    ctx.arc( x/2, y - fir - fir, fir, 0, 2 * Math.PI );
-    ctx.stroke();
-    ctx.fill();
+    workingCTX.fillStyle = c; //
+    workingCTX.beginPath();
+    workingCTX.arc( x/2, sec, fir, 0, 2 * Math.PI );
+    workingCTX.arc( x/2, y - fir - fir, fir, 0, 2 * Math.PI );
+    workingCTX.stroke();
+    workingCTX.fill();
     // draws the pages
-    ctx.fillStyle = p;
+    workingCTX.fillStyle = p;
     switch( pageNum ){
         case 0:
             // right page only
-            ctx.fillRect( x/2, sec, ( x/2 ) - sec , y - 2 *(sec) );
+            workingCTX.fillRect( x/2, sec, ( x/2 ) - sec , y - 2 *(sec) );
             break;
         case 2:
             // left page only
-            ctx.fillRect( sec, sec, x/2 - sec, y - 2 *(sec) );
+            workingCTX.fillRect( sec, sec, x/2 - sec, y - 2 *(sec) );
             break;
         default:
             // both pages
-            ctx.fillRect( sec, sec, x - 2 *(sec), y - 2 *(sec) );
+            workingCTX.fillRect( sec, sec, x - 2 *(sec), y - 2 *(sec) );
     }
 
     // draws the shadow/gap between the pages
-    ctx.fillStyle = c;
-    ctx.fillRect( x/2 - ( fir )/2, sec - 1, fir, y - 2 *(sec) + 2 );
+    workingCTX.fillStyle = c;
+    workingCTX.fillRect( x/2 - ( fir )/2, sec - 1, fir, y - 2 *(sec) + 2 );
 
     
-    ctx.fillStyle = r;
+    workingCTX.fillStyle = r;
     var initVal = sec + fir;
     var left = x / 2 - fir;
     var right = x / 2 + fir;
@@ -131,28 +123,12 @@ function createPage( pageNum ){
     var incrementVal = 2 * height;
     for( var i = initVal; i < limit; i += incrementVal )
     {
-        ctx.beginPath();
-        ctx.arc( left, i + height/2, height/2, 0, 2 * Math.PI );
-        ctx.arc( right, i + height/2, height/2, 0, 2 * Math.PI );
-        ctx.stroke();
-        ctx.fillRect( left, i, width, height );
-        ctx.fill();
-    }
-
-    ctx.font = "30px Arial";
-    ctx.fillStyle = t;
-    ctx.textAlign = "center";
-    var leftCenter = x/4 + fir;
-    var rightCenter = x/2 + x/4 - fir;
-    var pageWidth = x/2 - 2 * sec;
-    for( var i = initVal; i < limit; i += incrementVal )
-    {
-        ctx.beginPath();
-        ctx.arc( left, i + height/2, height/2, 0, 2 * Math.PI );
-        ctx.arc( right, i + height/2, height/2, 0, 2 * Math.PI );
-        ctx.stroke();
-        ctx.fillRect( left, i, width, height );
-        ctx.fill();
+        workingCTX.beginPath();
+        workingCTX.arc( left, i + height/2, height/2, 0, 2 * Math.PI );
+        workingCTX.arc( right, i + height/2, height/2, 0, 2 * Math.PI );
+        workingCTX.stroke();
+        workingCTX.fillRect( left, i, width, height );
+        workingCTX.fill();
     }
 }
 
