@@ -1,4 +1,4 @@
-var x, y, fir, sec, cSettings = [], pics, workingCTX, curPage = 0, user, scrap;
+var x, y, fir, sec, cSettings = [], pics, workingCTX, curPage = 0, rCenter, lCenter;
 function set( width, height, canv )
 {
     x = width;
@@ -7,15 +7,15 @@ function set( width, height, canv )
     document.getElementById(canv).height = height;
 }
 
-function setDisplay( canv, width, height, settings, picArray, userName, scrapName ){
+function setDisplay( canv, width, height, settings, picArray ){
     var canvas = document.getElementById(canv);
     workingCTX = canvas.getContext("2d");
     canvas.width = width;
     canvas.height = height;
     x = width;
     y = height;
-    user = userName;
-    scrap = scrapName;
+    lCenter = x/4 + fir;
+    rCenter = x/2 + x/4 - fir;
     fir = (y - y * .95)/2;
     sec = ( 2 * fir ) + ( fir / 2 );
     cSettings = settings;
@@ -23,23 +23,21 @@ function setDisplay( canv, width, height, settings, picArray, userName, scrapNam
 }
 
 function handleArrows( key ){
-    key = key || window.event;
     var change = false;
-    switch( key.keyCode ){
-        case '37': // left 
+    switch( key ){
+        case "left":
             if( curPage != 0 ){
-                --curPage;
+                --curPage
                 change = true;
-                window.alert("left");
+                alert( "left");
             }
             break;
-        case '39': // right
+        case "right":
             if( 2 * curPage < pics.length ){
                 ++curPage;
                 change = true;
-                window.alert("right");
+                alert("right");
             }
-            break;
     }
 
     if( change === true ){
@@ -48,28 +46,55 @@ function handleArrows( key ){
 }
 
 function makePage( page ){
-    var leftCenter = x/4 + fir;
-    var rightCenter = x/2 + x/4 - fir;
     var pageWidth = x/2 - 2 * sec;
-    if( page == 0 ){
+    var t = new Option().style.color = cSettings.text
+    workingCTX.textAlign = "center";
+    workingCTX.fillStyle = t;
+    if( page == 0 ){ // Title Page
         createPage( 0 );
-        var t = new Option().style.color = cSettings.text
-        workingCTX.textAlign = "center";
-        workingCTX.fillStyle = t;
+        workingCTX.font = "60px Arial";
+        writeText( workingCTX, y/4, rightCenter, cSettings.scrap, pageWidth, 60 );
         workingCTX.font = "30px Arial";
-        writeText( workingCTX, y/8, rightCenter, scrap, pageWidth, 30 );
-        workingCTX.font = "20px Arial";
-        writeText( workingCTX, y - y/4, rightCenter, user, pageWidth, 20 );
+        writeText( workingCTX, y - y/4, rightCenter, cSettings.user, pageWidth, 30 );
     }
-    else if( pics.length = 2 * page - 1 ){
+    else if( pics.length == 2 * page - 1 ){ // Left Page only
         createPage( 2 );
+        loadRest( pics[ page * 2  - 2], 0, pageWidth );
     }
-    else{
+    else{ // Both Pages
         createPage( 1 );
+        loadRest( pics[ page * 2 - 2], pics[ page * 2 - 1], pageWidth );
     }
-
 }
 
+function loadRest( left, right, pageWidth ){
+    if( right != 0 ){
+        var imgR = new Image();
+        imgR.onload = function(){ 
+            workingCTX.drawImage( img, rCenter - x/6, y/5, x/3, y/2 );
+        }
+        imgR.src = right.path;
+    }
+
+    var imgL = new Image();
+    imgL.onload = function(){
+        workingCTX.drawImage( img, lCenter - x/6, y/5, x/3, y/2 );
+    }
+    imgL.src = left.path;
+
+    workingCTX.font = "30px Arial";
+    if( right !=  0 ){
+        writeText( workingCTX, y/8, rCenter, right.title, pageWidth, 30 );
+    }
+    writeText( workingCTX, y/8, lCenter, left.title, pageWidth, 30 );
+
+    workingCTX = "20px Arial";
+    if( right != 0 ){
+        writeText( workingCTX, y - y/4, rCenter, right.cap, pageWidth, 20 );
+    }
+    writeText( workingCTX, y - y/4, lCenter, left.cap, pageWidth, 20 );
+
+}
 function createPage( pageNum ){
     var c = new Option().style.color = cSettings.cover;
     var p = new Option().style.color = cSettings.paper;
@@ -270,9 +295,11 @@ function writeText( ctx, startH, side, words, pageWidth, height ){
 }
 
 function loadImg( ctx, pic, side ){
-    const img = new Image( x/3, y/2 );
+    const img = new Image();
+    img.onload = function() {
+        ctx.drawImage( img, side - x/6, y/5, x/3, y/2 );
+    }
     img.src = pic;
-    img.onload = ctx.drawImage( img, side - x/6, y/5, x/3, y/2 );
 }
 
 function validateC(toValid, canv, cover, paper, rings, text){

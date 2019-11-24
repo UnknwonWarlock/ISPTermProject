@@ -33,6 +33,8 @@
                 $settings['paper'] = $row['paper'];
                 $settings['rings'] = $row['rings'];
                 $settings['text'] = $row['text'];
+                $settings['user'] = $_SESSION['username'];
+                $settings['scrap'] = $_SESSION['scrapbook'];
             }
             $query = "select * from " . $_SESSION['username'] . "_" . $_SESSION['scrapbook'];
             $result = mysqli_query($db,$query);
@@ -52,7 +54,7 @@
         <script src="assets/js/create.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
     </head>
-    <body>
+    <body style="overflow-x:hidden">
         <header><a class="home" href="home.php">DigiScrap</a>: A Place for Scrap Bookers!</header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
@@ -60,8 +62,9 @@
             <li><button onclick="openTab(event, 'About')" class="tablinks">About</button></li>
             <li><button onclick="openTab(event, 'Help')" class="tablinks">Help</button></li>
         </ul>        
-        <canvas id="test" style="border: 3px solid black"></canvas>
+        <canvas id="test"></canvas>
         <script>
+            var curPage = 0;
             setDisplay( "test", 
                         1400,
                         700,
@@ -70,6 +73,17 @@
                         "<?php echo $_SESSION['username'] ?>",
                         "<?php echo $_SESSION['scrapbook'] ?>");
             makePage(0);
+            document.onkeydown = function(event) {
+                var change = false;
+                switch (event.keyCode) {
+                case 37: // left
+                    handleArrows( "left" );
+                    break;
+                case 39: // right
+                    handleArrows( "right" );
+                    break;
+                }
+            };
         </script>
     </body>
 </html>
