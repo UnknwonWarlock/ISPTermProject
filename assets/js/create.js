@@ -71,16 +71,17 @@ function loadRest( left, right, pageWidth ){
     if( right != 0 ){
         var imgR = new Image();
         imgR.onload = function(){ 
-            workingCTX.drawImage( this, rCenter - x/6, y/5, x/3, y/2 );
+            workingCTX.drawImage( imgR, rCenter - x/6, y/5, x/3, y/2 );
         }
-        imgR.src = right.path;
+        imgR.src = right.path.substring( 1 );
+        // imgR.src = "/uploadedFiles/Bree2-Meow-blep.jpg";
     }
 
     var imgL = new Image();
     imgL.onload = function(){
-        workingCTX.drawImage( this, lCenter - x/6, y/5, x/3, y/2 );
+        workingCTX.drawImage( imgL, lCenter - x/6, y/5, x/3, y/2 );
     }
-    imgL.src = left.path;
+    imgL.src = left.path.substring( 1 );
 
     var t = new Option().style.color = cSettings.text;
     workingCTX.fillStyle = t;
