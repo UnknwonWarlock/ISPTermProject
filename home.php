@@ -220,6 +220,14 @@
                 be off.
             </p>
             <p>
+                <b><u>Creating Scrapbooks?</u></b>:
+            </p>
+            <p  style="margin: 1px 50px 25px 50px; line-height: 1.5;">
+                The current build of this project does not allow for whitespace inside the titles of the scrapbook for this will
+                stop the scrapbook from showing. There is also no current support to change a scrapbook's display settings when
+                they are already created. (These are planned features in the future, thank you for your patience).
+            </p>
+            <p>
                 <b><u>Other Help or Bugs to Report?</u></b>:
             </p>
             <p  style="margin: 1px 50px 25px 50px; line-height: 1.5;">
