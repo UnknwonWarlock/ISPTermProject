@@ -29,14 +29,14 @@ function handleArrows( key ){
             if( curPage != 0 ){
                 --curPage
                 change = true;
-                alert( "left");
+                // alert( "left");
             }
             break;
         case "right":
             if( 2 * curPage < pics.length ){
                 ++curPage;
                 change = true;
-                alert("right");
+                // alert("right");
             }
     }
 
@@ -71,14 +71,14 @@ function loadRest( left, right, pageWidth ){
     if( right != 0 ){
         var imgR = new Image();
         imgR.onload = function(){ 
-            workingCTX.drawImage( img, rCenter - x/6, y/5, x/3, y/2 );
+            workingCTX.drawImage( this, rCenter - x/6, y/5, x/3, y/2 );
         }
         imgR.src = right.path;
     }
 
     var imgL = new Image();
     imgL.onload = function(){
-        workingCTX.drawImage( img, lCenter - x/6, y/5, x/3, y/2 );
+        workingCTX.drawImage( this, lCenter - x/6, y/5, x/3, y/2 );
     }
     imgL.src = left.path;
 
@@ -90,11 +90,11 @@ function loadRest( left, right, pageWidth ){
     }
     writeText( workingCTX, y/8, lCenter, left.title, pageWidth, 30 );
 
-    workingCTX = "20px Arial";
+    workingCTX.font = "20px Arial";
     if( right != 0 ){
         writeText( workingCTX, y - y/4, rCenter, right.cap, pageWidth, 20 );
     }
-    writeText( workingCTX, y - y/4, lCenter, left.cap, pageWidth, 20 );
+    writeText( workingCTX, y - y/4, lCenter, left.cap, pageWidth, 20 ); 
 
 }
 function createPage( pageNum ){

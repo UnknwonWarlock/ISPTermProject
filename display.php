@@ -73,12 +73,12 @@
             document.onkeydown = function(event) {
                 switch (event.keyCode) {
                 case 37: // left
-                    alert( "left");
-                    // handleArrows( "left" );
+                    // alert( "left");
+                    handleArrows( "left" );
                     break;
                 case 39: // right
-                    alert("right");
-                    // handleArrows( "right" );
+                    // alert("right");
+                    handleArrows( "right" );
                     break;
                 }
             };
