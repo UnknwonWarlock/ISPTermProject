@@ -26,7 +26,6 @@
         {
             $_SESSION["scrapbook"] = $_POST['scrapbook'];
         }
-        
         else if($_POST["submit"] == "Create Scrapbook!")
         {
             $query = 'SELECT * FROM ' . $_SESSION["username"] . ' WHERE scrapbook="' . $_POST['scrapbook'] . '"';
@@ -82,6 +81,14 @@
                 $query3 = "DROP TABLE " . $_SESSION["username"] . "_" . $_POST['scrapbook'] . ";";
                 mysqli_query($db,$query3);
                 unset($_SESSION['scrapbook']);
+
+                $query4 = "SELECT scrapbook FROM ". $_SESSION['username'];
+                $result2 = mysqli_query($db, $query4);
+                if( mysqli_num_rows($result2) > 0 )
+                {
+                    $row = mysqli_fetch_array($result2);
+                    $_SESSION['scrapbook'] = $row['scrapbook'];
+                }
             }
         }
         else if($_POST["submit"] == "Delete Picture!")
@@ -244,22 +251,19 @@
                         Text Color:<br>
                         <input type="text" id="textColor" class="textbox" name="bordColor" value="black" onkeyup="validateC('textColor', 'test', 'cover', 'paper', 'rings', 'textColor')" required><br><br>
                     </div>
-                    <div class="column">
-                    </div>
+                    <div class="column"></div>
                 </div>
                 <div class="gridWrapper">
-                    <div class="column">
-                    </div>
+                    <div class="column"></div>
                     <div class="column">
                         <canvas id="test"></canvas>
-                        <script>
-                            set(600, 300, "test");
-                            create("test", "cover", "paper", "rings", "textColor");
-                        </script>
                     </div>
-                    <div class="column">
-                    </div>
+                    <div class="column"></div>
                 </div>
+                <script>
+                        set(600, 300, "test");
+                        create("test", "cover", "paper", "rings", "textColor");
+                </script>
             </form>
         </div>
         <div id="AEScrap" class="tabcontent">
@@ -283,24 +287,23 @@
                     <textarea cols="280" type="text" name="caption" id="picCaption" onkeyup="words('secret', 'picCaption', 'cap')">Enter a Caption!</textarea><br><br>
                     <input type="button" name="submit" value="Add" class="submit" id="button">
                 </form>
-                <canvas id="secret"></canvas>
+                <canvas id="secret" height="1" width="1"></canvas>
                 <!--
                     This script allows me to change some of base options for the drag and drop form
                     such as one file at a time and remove and replace the old file with a new one, a diffent initial display message
                     and the size of the picture (have to override the dropzone.css too)
                 -->
                 <script>
-                    set(1,1, "secret");
                     function words(canv, words, type)
                     {
                         var check = testWords(canv, words, type);
                         if(check === false && type === "cap")
                         {
-                            prompt("Too many words in Caption!");   
+                            alert("Too many words in Caption!");
                         }
-                        else if(check === false && type === "titles")
+                        else if(check === false && type === "title")
                         {
-                            prompt("Too many words in Title");
+                            alert("Too many words in Title");
                         }
                     }
 

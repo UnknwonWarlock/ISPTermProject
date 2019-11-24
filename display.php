@@ -48,6 +48,8 @@
         </ul>        
         <canvas id="test"></canvas>
         <script>
+            set(1200, 600, "test");
+            create("test", "cover", "paper", "rings", "textColor");
         </script>
     </body>
 </html>

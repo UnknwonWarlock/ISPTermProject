@@ -180,9 +180,9 @@ function create( canv, cover, paper, rings, text ){
     // draws the pages
     ctx.fillStyle = p;
     // Both Pages
-    ctx.fillRect( secWidth, secWidth, x - 2 *(secWidth), y - 2 *(secWidth) );
+    //ctx.fillRect( secWidth, secWidth, x - 2 *(secWidth), y - 2 *(secWidth) );
     // Right page only
-    // ctx.fillRect( x/2, secWidth, ( x/2 ) - secWidth , y - 2 *(secWidth) );
+    ctx.fillRect( x/2, secWidth, ( x/2 ) - secWidth , y - 2 *(secWidth) );
     // Left page only
     // ctx.fillRect( secWidth, secWidth, x/2 - secWidth, y - 2 *(secWidth) );
 
@@ -290,7 +290,9 @@ function validateC(toValid, canv, cover, paper, rings, text){
     var s = new Option().style;
     s.color = document.getElementById(toValid).value;
     if( !( s.color == document.getElementById(toValid).value.toLowerCase() ) || document.getElementById(toValid).value === ""  )
+    {
         document.getElementById(toValid).style = "border: 1px solid red;";
+    }
     else{
         document.getElementById(toValid).style = "border: 1px solid black";
         create( canv, cover, paper, rings, text );
