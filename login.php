@@ -69,7 +69,7 @@
                         $_POST['pass'] . "' )";
                         mysqli_query($db, $query);
                         $_SESSION['username'] = $_POST['user'];
-                        $query2 = "create table " . $_SESSION['username'] . "( scrapbook VARCHAR(30), settings text );";
+                        $query2 = "create table " . $_SESSION['username'] . "( scrapbook VARCHAR(30), cover VARCHAR(30), paper VARCHAR(30), rings VARCHAR(30), text VARCHAR(30) );";
                         trim($query2);
                         mysqli_query($db, $query2);
                         mysqli_close($db);
