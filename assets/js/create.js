@@ -1,4 +1,4 @@
-var x, y, fir, sec, cSettings = [], pics = [], workingCTX, curPage = 0, user, scrap;
+var x, y, fir, sec, cSettings, pics, canvasName, curPage = 0, user, scrap;
 function set( width, height, canv )
 {
     x = width;
@@ -8,8 +8,8 @@ function set( width, height, canv )
 }
 
 function setDisplay( canv, width, height, settings, picArray, userName, scrapName ){
+    canvasName = canv;
     var canvas = document.getElementById(canv);
-    workingCTX = canvas.getContext("2d");
     canvas.width = width;
     canvas.height = height;
     x = width;
@@ -30,12 +30,14 @@ function handleArrows( key ){
             if( curPage != 0 ){
                 --curPage;
                 change = true;
+                window.alert("left");
             }
             break;
         case '39': // right
             if( 2 * curPage < pics.length ){
                 ++curPage;
                 change = true;
+                window.alert("right");
             }
             break;
     }
@@ -46,29 +48,39 @@ function handleArrows( key ){
 }
 
 function makePage( page ){
+    var canvas = document.getElementById(canvasName);
+    var workingCTX = canvas.getContext("2d");
     var leftCenter = x/4 + fir;
     var rightCenter = x/2 + x/4 - fir;
     var pageWidth = x/2 - 2 * sec;
     if( page == 0 ){
         createPage( 0 );
-        workingCTX.fillStyle = textColor;
+        workingCTX.fillStyle = cSettings[0].text;
         workingCTX.font = "30px Arial";
-        workingCTX.
         writeText( workingCTX, y/8, rightCenter, scrap, pageWidth, 30 );
         workingCTX.font = "20px Arial";
         writeText( workingCTX, y - y/4, rightCenter, userName, pageWidth, 20 );
     }
+    else if( pics.length = 2 * page - 1 ){
+        createPage( 2 );
+    }
+    else{
+        createPage( 1 );
+    }
+
+
 }
 
 function createPage( pageNum ){
+    var workingCTX = document.getElementById(canvasName).getContext("2d");
     var c = new Option().style.color;
-    c = cSettings[0].cover;
+    c = cSettings.cover;
     var p = new Option().style.color;
-    p = cSettings[0].paper;
+    p = cSettings.paper;
     var r = new Option().style.color;
-    r = document.cSettings[0].rings;
+    r = document.cSettings.rings;
     var t = new Option().style.color;
-    t = document.cSettings[0].textColor;
+    t = document.cSettings.textColor;
 
     workingCTX.strokeStyle = "rgba(1, 1, 1, 0)";
     ctx.fillStyle = c;
@@ -143,6 +155,7 @@ function createPage( pageNum ){
         ctx.fill();
     }
 }
+
 function create( canv, cover, paper, rings, text ){
     var canvas = document.getElementById(canv);
     var ctx = canvas.getContext("2d");

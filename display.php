@@ -27,18 +27,32 @@
         if( isset( $_SESSION['scrapbook'] ) ){
             $query = 'select * from ' . $_SESSION['username'] . ' where scrapbook="' . $_SESSION['scrapbook'] . '"';
             $result = mysqli_query($db, $query);
-            $pics['text'] = 
-            
+            if( $result ){
+                $row = mysqli_fetch_array( $result );
+                $settings['cover'] = $row['cover'];
+                $settings['paper'] = $row['paper'];
+                $settings['rings'] = $row['rings'];
+                $settings['text'] = $row['text'];
+            }
             $query = "select * from " . $_SESSION['username'] . "_" . $_SESSION['scrapbook'];
-            $pics = mysqli_query($db,$query);
+            $result = mysqli_query($db,$query);
+            if( $result ){
+                while( $row = mysqli_fetch_array( $result ) )
+                    $pics[] = array( 
+                        'title' => $row['title'],
+                        'path' => $row['image_path'],
+                        'cap' => $row['caption']
+                    );
+            }
         }
+        mysqli_close($db);
     ?>
     <head>
         <title>DigiScrap: Display</title>
         <script src="assets/js/create.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
     </head>
-    <body onload="setDisplay('test', 1200, 700, <?php echo json_encode( $settings ) ?>, <?php echo json_encode( $pics ) ?>, '<?php echo $_SESSION['username']?>', '<?php echo $_SESSION['scrap']?>')">
+    <body onkeydown="handleArrows()">
         <header><a class="home" href="home.php">DigiScrap</a>: A Place for Scrap Bookers!</header>
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
@@ -46,10 +60,16 @@
             <li><button onclick="openTab(event, 'About')" class="tablinks">About</button></li>
             <li><button onclick="openTab(event, 'Help')" class="tablinks">Help</button></li>
         </ul>        
-        <canvas id="test"></canvas>
+        <canvas id="test" style="border: 3px solid black"></canvas>
         <script>
-            set(1200, 600, "test");
-            create("test", "cover", "paper", "rings", "textColor");
+            setDisplay( "test", 
+                        1200,
+                        700,
+                        <?php echo json_encode( $settings ) ?>,
+                        <?php echo json_encode( $pics ) ?>,
+                        "<?php echo $_SESSION['username'] ?>",
+                        "<?php echo $_SESSION['scrapbook'] ?>");
+            makePage(0);
         </script>
     </body>
 </html>

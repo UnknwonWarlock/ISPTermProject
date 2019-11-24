@@ -33,8 +33,7 @@
             $result = mysqli_query($db, $query);
             if(mysqli_num_rows($result) == 0)
             {
-
-                $settings = $_POST['backColor'] . "/" . $_POST['captColor'] . "/" . $_POST['bordType'] . "/" . $_POST['bordColor'];
+                $settings = $_POST['backColor'] . "', '" . $_POST['captColor'] . "', '" . $_POST['bordType'] . "', '" . $_POST['bordColor'];
                 $query2 = "INSERT INTO " . $_SESSION['username'] . " VALUES('" . $_POST['scrapbook'] . "', '" . $settings . "');";
                 trim($query2);
                 mysqli_query($db,$query2);
@@ -114,8 +113,8 @@
 
         $query = 'SELECT title FROM ' . $_SESSION["username"] . '_' . $_SESSION["scrapbook"];
         $result2 = mysqli_query( $db, $query);
-        if( mysqli_num_rows($result2) > 0 ){
-            while($row2 = mysqli_fetch_array($result2)){
+        if( mysqli_num_rows($result2 ) > 0 ){
+            while( $row2 = mysqli_fetch_array($result2) ){
                 $imageTitles .= "<option value='" . $row2['title'] . "'>" . $row2['title'] . "</option>";
             }
         }
