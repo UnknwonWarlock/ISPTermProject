@@ -59,8 +59,6 @@
         <ul>
             <li><button><a href="login.php">Logout</a></button></li>
             <li><button><a href="home.php">Home</a></button></li>
-            <li><button onclick="openTab(event, 'About')" class="tablinks">About</button></li>
-            <li><button onclick="openTab(event, 'Help')" class="tablinks">Help</button></li>
         </ul>        
         <canvas id="test"></canvas>
         <script type="text/javascript">
