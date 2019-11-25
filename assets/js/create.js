@@ -98,6 +98,7 @@ function loadRest( left, right, pageWidth ){
     writeText( workingCTX, y - y/4, lCenter, left.cap, pageWidth, 20 ); 
 
 }
+
 function createPage( pageNum ){
     var c = new Option().style.color = cSettings.cover;
     var p = new Option().style.color = cSettings.paper;
@@ -164,14 +165,10 @@ function create( canv, cover, paper, rings, text ){
     var canvas = document.getElementById(canv);
     var ctx = canvas.getContext("2d");
 
-    var c = new Option().style.color;
-    c = document.getElementById(cover).value;
-    var p = new Option().style.color;
-    p = document.getElementById(paper).value;
-    var r = new Option().style.color;
-    r = document.getElementById(rings).value;
-    var t = new Option().style.color;
-    t = document.getElementById(text).value;
+    var c = new Option().style.color = document.getElementById(cover).value;
+    var p = new Option().style.color = document.getElementById(paper).value;
+    var r = new Option().style.color = document.getElementById(rings).value;
+    var t = new Option().style.color = document.getElementById(text).value;
 
     // outline color, cover color
     ctx.strokeStyle = "rgba(1, 1, 1, 0)"; 
@@ -194,14 +191,9 @@ function create( canv, cover, paper, rings, text ){
     ctx.arc( x/2, y - startWidth - startWidth, startWidth, 0, 2 * Math.PI );
     ctx.stroke();
     ctx.fill();
-    // draws the pages
     ctx.fillStyle = p;
-    // Both Pages
-    //ctx.fillRect( secWidth, secWidth, x - 2 *(secWidth), y - 2 *(secWidth) );
     // Right page only
     ctx.fillRect( x/2, secWidth, ( x/2 ) - secWidth , y - 2 *(secWidth) );
-    // Left page only
-    // ctx.fillRect( secWidth, secWidth, x/2 - secWidth, y - 2 *(secWidth) );
 
 
     // draws the shadow/gap between the pages
@@ -227,17 +219,15 @@ function create( canv, cover, paper, rings, text ){
         ctx.fill();
     }
 
-    ctx.font = "30px Arial";
+    ctx.font = "20px Arial";
     ctx.fillStyle = t;
     ctx.textAlign = "center";
-    var leftCenter = x/4 + startWidth;
     var rightCenter = x/2 + x/4 - startWidth;
     var pageWidth = x/2 - 2 * secWidth;
-    // max title new lines = 2; height = y/8; txt = 30px
-    // max caption new lines = 7; height = y - y/4; txt = 20px
-    // var test = "llow, this is a ihasdnio a9j0sd asiojdasio jioasdjio oji asdji jiojgod sfhio sad ioasf hioeafo nfoidstest of characters nieeasdj jasd asjdas  jasdn asjd asdj asjd asdk jasd jasd m0pf jasdop asjopd joaspd jaopsd joasd jopsad jopasd jopasjd asjassaasdjasjasdjas jasdk asjd kasdj asdsaj kasdjasdk adk sadk asj kj ald jjassdj  j ajdjj jasdk kkasdj asdj asjda s, asdjs djw dj aj asdja dsajd sajkd asdkjsa djf sakdsa fjs dsakjfsa djasd asj as d jsadsandjsad as  adas lease ignore thsi tecxt mmmmmmmmm, yes"
-    writeText( ctx, y/8, leftCenter, "Hello, I am your ScrapBook!", pageWidth, 30 );
-    // loadImg( ctx, "canvas.png", leftCenter );
+    writeText( ctx, y/8, rightCenter, "Hello, I am your ScrapBook!", pageWidth, 20 );
+    ctx.font = "15px Arial";
+    writeText( ctx, y - y/4, rightCenter, "Hello, I am a caption!", pageWidth, 15 )
+    loadImg( ctx, "assets/imgs/stock_test.jpg", rightCenter );
 }
 
 function parse( ctx, words, pageWidth, type){
@@ -317,14 +307,3 @@ function validateC(toValid, canv, cover, paper, rings, text){
         create( canv, cover, paper, rings, text );
     }
 }
-
-/*
-Cover       page            rings           text
-
-aquamarine  floralwhite     cadetblue       navy
-lightcoral  linen           saddlebrown     black
-teal        cornskilk       goldenrod       indianred
-pink        lightyellow     black           navy
-
-
-*/

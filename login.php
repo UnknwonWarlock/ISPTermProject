@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="assets/styles/homeStyle.css">
         <link rel="stylesheet" type="text/css" href="assets/styles/tabStyle.css">
     </head>
-    <body>
+    <body style="overflow-x:hidden">
         <header><a class="home" href="login.php">DigiScrap</a>: A Place for Scrap Bookers!</header>
         <ul>
             <li><button onclick="openTab(event, 'login')" class="tablinks">Login</button></li>

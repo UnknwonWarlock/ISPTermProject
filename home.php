@@ -129,7 +129,7 @@
         <script src="assets/js/dropzone.js"></script>
         <script src="assets/js/create.js"></script>
     </head>
-    <body>
+    <body style="overflow-x:hidden">
         <header>
             <a class="home" href="home.php">DigiScrap</a>: A Place for Scrap Bookers! Welcome <?php echo $_SESSION['username'] ?>! 
         </header>
@@ -182,7 +182,8 @@
                 <b><u>dropzone.js</u></b>:<br> For the nice and intuitive drag and drop file implementation used in the adding feature <br>
                 <b><u>Mason Roberts</u></b>:<br> Database table creations and management, File uploading and deleting, Adding images to a scrapbook,
                 and general help with design features with the tabs and dropdown menu selectors. <br>
-                <b><u>Bree Harris</u></b>:<br> Insert your contributions here Bree!<br>
+                <b><u>Bree Harris</u></b>:<br> Database table creation and managemnet, login and register, main website design, any canvas
+                element, main display of scrapbook<br>
             </p>
         </div>
         <div id="Help" class="tabcontent">
